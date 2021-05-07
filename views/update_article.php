@@ -13,3 +13,6 @@ $articlec=new ArticleC();
 $articlec->modifier_article($Ref_article,$Nom_article,$image,$Description,$Prix_article);
 header('Location:afficher_article.php');
 ?>
+
+
+
