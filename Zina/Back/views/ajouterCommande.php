@@ -5,6 +5,7 @@
 
     $error = "";
 
+    // create commande7
     // create commande
     $commande = null;
 
