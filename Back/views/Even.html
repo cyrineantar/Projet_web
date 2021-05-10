@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion  evenement</title>
+</head>
+    <body>
+   
+        <hr>
+        
+        <form action="ajouterEven.php" method="POST">
+            <table border="1" align="center">
+
+                <tr>
+                    <td rowspan='5' colspan='1'>Ajouter un evenement</td>
+                    <td>
+                        <label for="nom_even">Nom_even:
+                        </label>
+                    </td>
+                    <td><input type="text" name="nom_even" id="nom_even" maxlength="20"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="date_even">Date_even:
+                        </label>
+                    </td>
+                    <td><input type="date" name="date_even" id="date_even" maxlength="20"></td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="localisation">localisation:
+                        </label>
+                    </td>
+                    <td><input type="text" name="localisation" id="localisation" maxlength="20"></td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="description">Description:
+                        </label>
+                    </td>
+                    <td><input type="text" name="description" id="description" maxlength="20"></td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="id_catg_even">Id_catg_even:
+                        </label>
+                    </td>
+                    <td><input type="number" name="id_catg_even" id="id_catg_even" maxlength="20"></td>
+                </tr>
+
+                
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="Envoyer"> 
+                    </td>
+                    <td>
+                        <input type="reset" value="Annuler" >
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>
