@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    <title>Zina Back | Login</title>
+	<link rel="shortcut icon" href="back/img/logo.png">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
@@ -9,7 +11,7 @@
   <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
   <link rel="shortcut icon" href="img/favicon.png">
 
-  <title>Login Page 2 | Creative - Bootstrap 3 Responsive Admin Template</title>
+  <title>Login Page Zina</title>
 
   <!-- Bootstrap CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -26,29 +28,37 @@
 
 <body class="login-img3-body">
 
-<div class="logozina" action="index.html">
-<a href="C:\Users\ASUS\Desktop\zina\Front\index.html"><img src="img/logo.png" width="180" height="180"></a>
+<div class="logozina" action="">
+<a href=""><img src="img/logo.png" width="180" height="180"></a>
 </div>
   <div class="container">
     
-    <form class="login-form" action="index.html">
+	<form class="login-form" action="verification.php" method="POST">
       <div class="login-wrap">
         <p class="login-img"><i class="icon_lock_alt"></i></p>
         <div class="input-group">
           <span class="input-group-addon"><i class="icon_profile"></i></span>
-          <input type="text" class="form-control" placeholder="Username" autofocus>
+          <input class="form-control" type="text" placeholder="Your ID" name="username" required>
         </div>
         <div class="input-group">
           <span class="input-group-addon"><i class="icon_key_alt"></i></span>
-          <input type="password" class="form-control" placeholder="Password">
+          <input class="form-control" type="password" placeholder="Password" name="password" required>
         </div>
         <label class="checkbox">
                 <input type="checkbox" value="remember-me"> Remember me
                 <span class="pull-right"> <a href="#"> Forgot Password?</a></span>
             </label>
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
-        <button class="btn btn-info btn-lg btn-block" type="submit">Signup</button>
-      </div>
+      
+		<input class="btn btn-primary btn-lg btn-block" type="submit" id='submit' value='Login' >
+	    <input type="button" class="btn btn-primary btn-lg btn-block" onclick="location.href='http://localhost/goweb/Zina/Back/ajouterAdmin.php';" value="Sign up" />
+      <?php
+                if(isset($_GET['erreur'])){
+                    $err = $_GET['erreur'];
+                    if($err==1 || $err==2)
+                        echo "<p style='color:red'>Id ou mot de passe incorrect</p>";
+                }
+        ?>
+	  </div>
     </form>
     <div class="text-right">
       <div class="credits">

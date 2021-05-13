@@ -803,7 +803,7 @@ session_start();
 
                       <div class="chat-content">
                         <!-- In the chat meta, first include "time" then "name" -->
-                        <div class="chat-meta">3 hours ago <span class="pull-right">User</span></div>
+                        <div class="chat-meta">3 hours ago <span class="pull-right">Jenifer Smith</span></div>
                         Vivamus diam elit diam, consectetur fconsectetur dapibus adipiscing elit.
                         <div class="clearfix"></div>
                       </div>
