@@ -1,50 +1,19 @@
-<?php
-    include_once '../Zina/Back/model/Commande.php';
-    include_once '../Zina/Back/controller/CommandeC.php';
-    include_once '../Zina/Back/controller/ClientC.php';
-    include_once '../Zina/Back/model/Client.php';
-    include_once '../Zina/Back/controller/LivraisonC.php';
-    include_once '../Zina/Back/model/Livraison.php';
+<?PHP
+	include "../Zina/Back/controller/PanierC.php";
     include "../Zina/Back/config.php";
+    include "../Zina/Back/model/Panier.php";
 
-    $ClientC = new ClientC();
-    $listeClient= $ClientC->afficherClient();
+	include "../Zina/Back/model/Article.php";
+	include "../Zina/Back/controller/ArticleC.php";
 
-    $livraisonC = new LivraisonC();
-    $listeLivraison= $livraisonC ->afficher_livraison();
+	$panierC=new PanierC();
+	$listePaniers=$panierC->recupérerdernierpanier();
 
-    $error = "";
+	$articleC=new ArticleC();
+	$listeArticle =$articleC->afficher_article();
 
-    // create commande
-    $commande = null;
-
-    // create an instance of the controller
-    $commandeC = new CommandeC();
-    if (
-        isset($_POST["prix_total"]) && 
-        isset($_POST["id_client"]) &&
-        isset($_POST["id_livraison"]) 
-      
-    ) {
-        if (
-            !empty($_POST["prix_total"]) && 
-            !empty($_POST["id_client"]) && 
-            !empty($_POST["id_livraison"]) 
-          
-        ) {
-            $commande = new Commande(
-                $_POST['prix_total'],
-                $_POST['id_client'], 
-                $_POST['id_livraison'],
-               
-            );
-            $commandeC->ajouterCommande($commande);
-            header('Location:checkout1.php');
-        }
-        else
-            $error = "Missing information";
-        }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -118,7 +87,7 @@
             </li>
 	          <li class="nav-item"><a href="about.php" class="nav-link">About</a></li>
 	          <li class="nav-item"><a href="contact.php" class="nav-link">Contact</a></li>
-	          <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+	          <li class="nav-item cta cta-colored"><a href="cart.php" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
 
 	        </ul>
 	      </div>
@@ -130,102 +99,92 @@
       <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
           <div class="col-md-9 ftco-animate text-center">
-          	<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Checkout</span></p>
-            <h1 class="mb-0 bread">Checkout</h1>
+          	<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Cart</span></p>
+            <h1 class="mb-0 bread">My Cart</h1>
           </div>
         </div>
       </div>
     </div>
 
-    <section class="ftco-section">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-xl-8 ftco-animate">
-		  <form action="" method="POST" >                
-                <table align="center">
-            <tr>  
-               <td>
-                    <h3 style="color:#97daf5d5;"> 
-                    Add order
-            </h3>
-        </td> 
-    </tr>    
-                <tr>  
-                    <td>
-                        <label class="label"  for="prix_total">Price:
-                        </label>
-                    </td>
-                    <td><input class="controle" type="number" name="prix_total" id="prix_total" min="0" required /></td>
-                    <span class="resultat"></span>
-                </tr>
-                <tr>
+    <section class="ftco-section ftco-cart">
+			<div class="container">
+				<div class="row">
+    			<div class="col-md-12 ftco-animate">
+    				<div class="cart-list">
+	    				<table class="table">
+						    <thead class="thead-primary">
+						      <tr class="text-center">
+						        
+						      </tr>
+						    </thead>
+						   
+        
+							<div class="row mt-5 pt-3 d-flex">
+	          	<div class="col-md-6 d-flex">
+	          		<div class="cart-detail cart-total bg-light p-3 p-md-4">
+	          			<h3 class="billing-heading mb-4" style="color:#97daf5d5;" >Shopping cart list</h3>
+	          			<p class="d-flex">
+						  <?PHP
+				foreach($listePaniers as $panier){
+			?>
+		    						<span>ID Cart</span>
+		    						<span><?PHP echo $panier['Id_panier']; ?></span>
+		    					</p>
+		    					<p class="d-flex">
+		    						<span>REFERENCE Item</span>
+		    						<span><?PHP echo $panier['Ref_article']; ?></span>
+		    					</p>
+		    					<p class="d-flex">
+		    						<span>ID Order</span>
+		    						<span><?PHP echo $panier['Id_commande']; ?></span>
+		    					</p>
+		    					
+		    				
+								<hr>
+		    					<p class="d-flex total-price">
+								<form method="POST" action="supprimerCart.php">
+						<input type="submit" name="supprimer" value="Delete" class="btn btn-primary">
+						<input type="hidden" value=<?PHP echo $panier['Id_panier']; ?> name="id_panier">
+						</form>
+		    					</p>
 
-                <td>
-                        <label class="label" for="id_client">Id Customer:
-                        </label>
-                    </td>
-                <td>
-                    <select name="id_client" id="id_client" required >
-                     <option value="select" selected>Select</option>
-                        
-          <?php
-          foreach($listeClient as $ClientC){
+
+								<?PHP
+				}
+			?>
+								</div>  
+
+						        
+								
+								
+								
+						      </tr><!-- END TR-->
+						    </tbody>
+						  </table>
+					  </div>
+    			</div>
+    		</div>
+    		<div class="row justify-content-center">
+    			<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
+    				<div class="cart-total mb-3">
+    					<h3>Item price</h3>
+						<?php
+          foreach($listeArticle as $ArticleC){
            ?>
-           <option value ='<?PHP echo $ClientC['Id_client']; ?>'> <?PHP echo $ClientC['Id_client']; ?></option>
-           <?php
-          }
-          ?>
-          </select>   
-          </td> 
-                    <span class="resultat"></span>
-                </tr>
-
-
-          <tr>
-
-                <td>
-                        <label class="label" for="id_livraison">Id delivery:
-                        </label>
-                    </td>
-                <td>
-                    <select name="id_livraison" id="id_livraison" required >
-                     <option value="select" selected>Select</option>
-                        
-          <?php
-          foreach($listeLivraison as $LivraisonC){
-           ?>
-           <option value ='<?PHP echo $LivraisonC['Id_livraison']; ?>'> <?PHP echo $LivraisonC['Id_livraison']; ?></option>
-           <?php
-          }
-          ?>
-          </select>   
-          </td> 
-                    <span class="resultat"></span>
-                </tr>
-                <tr>     
-                   
-                    
-
-
-                <tr>
-                   <td>
-                   
-                        <input type="submit" value="Add" class="btn btn-primary"> 
-                   
-                    </td>
-                    <td>
-                  
-                        <input type="reset" value="Exit" class="btn btn-primary" >
-                   
-                   </td>
-                </tr>
-            </table>
-        </form>
-
-
-
-	     
-    </section> <!-- .section -->
+    					<p class="d-flex">
+    						<span>Item price</span>
+    						<span> <?PHP echo $ArticleC['Prix_article']; ?></span>
+    					</p>
+    					
+						<?php
+						}
+?>
+    				</div>
+    				<p class="text-center"><a href="checkout.php" class="btn btn-primary py-3 px-4">Order</a></p>
+    			</div>
+    		</div>
+			</div>
+		</section>
 
     <footer class="ftco-footer bg-light ftco-section">
       <div class="container">
@@ -301,38 +260,7 @@
       </div>
     </footer>
     
-    <style>
-input.controle {
-  outline:0;
-  font-size:14px;
-  width:250px;
-}	
-label.label {
-  display:inline-block;
-  width:200px;
-  text-align: right;
-  font-style: italic;
-  margin-right:5px;
-}
-input.controle:valid {
-  border:3px solid #0a0;
-}
-input.controle:invalid {
-  border:3px solid #a00;
-}
-input.controle:valid + span:before  {
-  content: "\f00c";
-  font-family: "fas fa-check";
-  color:#0a0;
-  font-size: 1.5em;
-}	
-input.controle:invalid + span:before  {
-  content: "\f00d";
-  font-family: "fas fa-times";
-  color:#a00;
-  font-size: 1.5em;
-}
-</style>
+  
 
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
@@ -354,6 +282,45 @@ input.controle:invalid + span:before  {
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
+
+  <script>
+		$(document).ready(function(){
+
+		var quantitiy=0;
+		   $('.quantity-right-plus').click(function(e){
+		        
+		        // Stop acting like a button
+		        e.preventDefault();
+		        // Get the field name
+		        var quantity = parseInt($('#quantity').val());
+		        
+		        // If is not undefined
+		            
+		            $('#quantity').val(quantity + 1);
+
+		          
+		            // Increment
+		        
+		    });
+
+		     $('.quantity-left-minus').click(function(e){
+		        // Stop acting like a button
+		        e.preventDefault();
+		        // Get the field name
+		        var quantity = parseInt($('#quantity').val());
+		        
+		        // If is not undefined
+		      
+		            // Increment
+		            if(quantity>0){
+		            $('#quantity').val(quantity - 1);
+		            }
+		    });
+		    
+		});
+	</script>
     
   </body>
 </html>
+
+

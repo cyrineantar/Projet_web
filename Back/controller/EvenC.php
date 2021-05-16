@@ -4,15 +4,16 @@
 class EvenC {
 		
     function ajouterEven($Even){
-        $sql="INSERT INTO evenements (nom_even, date_even, localisation, description, id_catg_even) 
-        VALUES (:nom_even, :date_even, :localisation, :description, :id_catg_even)";
+        $sql="INSERT INTO evenements (nom_even, date_deb,date_fin, localisation, description, id_catg_even) 
+        VALUES (:nom_even, :date_deb,:date_fin, :localisation, :description, :id_catg_even)";
         $db = config::getConnexion();
         try{
             $query = $db->prepare($sql);
         
             $query->execute([
                 'nom_even' => $Even->getNom_even(),
-                'date_even' => $Even->getDate_even(),
+                'date_deb' => $Even->getDate_deb(),
+                'date_fin' => $Even->getDate_fin(),
                 'localisation' => $Even->getLocalisation(),
                 'description' => $Even->getDescription(),
                 'id_catg_even' => $Even->getId_catg_even(),
@@ -27,7 +28,7 @@ class EvenC {
 
 function afficherEven(){
         
-    $sql="SELECT * FROM evenements";
+    $sql="SELECT * FROM evenements ORDER BY nom_even ASC";
     $db = config::getConnexion();
     try{
         $listeEven = $db->query($sql);
@@ -58,7 +59,8 @@ function modifierEven($Even, $id_even){
             'UPDATE evenements SET 
         
                 nom_even = :nom_even,
-                date_even = :date_even,
+                date_deb = :date_deb,
+                date_fin = :date_fin,
                 localisation = :localisation,
                 description = :description,
                 id_catg_even = :id_catg_even
@@ -71,7 +73,8 @@ function modifierEven($Even, $id_even){
         $query->execute([
     
            'nom_even' => $Even->getNom_even(),
-            'date_even' => $Even->getDate_even(),
+            'date_deb' => $Even->getDate_deb(),
+            'date_fin' => $Even->getDate_fin(),
             'localisation' => $Even->getLocalisation(),
             'description' => $Even->getDescription(),
             'id_catg_even' => $Even->getId_catg_even(),

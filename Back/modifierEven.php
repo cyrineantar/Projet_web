@@ -9,7 +9,8 @@
 	
 	if (
         isset($_POST["nom_even"]) && 
-        isset($_POST["date_even"]) && 
+        isset($_POST["date_deb"]) && 
+        isset($_POST["date_fin"]) && 
         isset($_POST["localisation"]) &&
         isset($_POST["description"]) &&  
         isset($_POST["id_catg_even"]) 
@@ -18,7 +19,8 @@
 	){
 		if (
             !empty($_POST["nom_even"]) && 
-            !empty($_POST["date_even"]) && 
+            !empty($_POST["date_deb"]) && 
+            !empty($_POST["date_fin"]) && 
             !empty($_POST["localisation"]) && 
             !empty($_POST["description"]) && 
             !empty($_POST["id_catg_even"])  
@@ -27,10 +29,11 @@
         ) {
             $even = new Even(
                 $_POST['nom_even'],
-                $_POST['date_even'],
+                $_POST['date_deb'],
+                $_POST['date_fin'],
                 $_POST['localisation'],
                 $_POST['description'],
-                $_POST['id_catg_even'], 
+                $_POST['id_catg_even']
                
 			);
 			
@@ -527,10 +530,17 @@
 				</tr>
                 <tr>
                     <td>
-                        <label for="date_even">date_even:
+                        <label for="date_deb">date_deb:
                         </label>
                     </td>
-                    <td><input type="date" name="date_even" id_even="date_even" maxlength="20" value = "<?php echo $even['Date_even']; ?>"></td>
+                    <td><input type="date" name="date_deb" id_even="date_deb" maxlength="20" value = "<?php echo $even['Date_deb']; ?>"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="date_fin">date_fin:
+                        </label>
+                    </td>
+                    <td><input type="date" name="date_fin" id_even="date_fin maxlength="20" value = "<?php echo $even['Date_fin']; ?>"></td>
                 </tr>
                 
                 <tr>

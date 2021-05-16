@@ -1,5 +1,6 @@
 <?php
 session_start();
+include "../Back/namecall.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -282,10 +283,8 @@ session_start();
                             <span class="username">
 							<?php
                             if($_SESSION['username'] !== ""){
-                            $user = $_SESSION['username'];
-							
-// Echo session variables that were set on previous page
-                            echo $user ;
+
+                            echo $reponse['nom_admin'];
 							}
                             ?></span>
                             <b class="caret"></b>
@@ -305,7 +304,7 @@ session_start();
                 <a href="#"><i class="icon_chat_alt"></i> Chats</a>
               </li>
               <li>
-                <a href="login.html"><i class="icon_key_alt"></i> Log Out</a>
+                <a href="login.php"><i class="icon_key_alt"></i> Log Out</a>
               </li>
               <li>
                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
@@ -1184,13 +1183,7 @@ session_start();
         });
       });
     </script>
-<?php
-// remove all session variables
-session_unset();
 
-// destroy the session
-session_destroy();
-?>
 </body>
 
 </html>

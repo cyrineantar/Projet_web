@@ -25,7 +25,7 @@
 
         function afficherPaniers(){
 			
-			$sql="SELECT * FROM paniers";
+			$sql="SELECT * FROM paniers order by ref_article ASC";
 			$db = config::getConnexion();
 			try{
 				$liste = $db->query($sql);
@@ -104,7 +104,19 @@
        
 
 
-		
+	   function recupérerdernierpanier(){
+			
+			$sql="SELECT * FROM paniers order by id_panier DESC limit 1";
+			$db = config::getConnexion();
+			try{
+				$liste = $db->query($sql);
+				return $liste;
+			}
+			catch (Exception $e){
+				die('Erreur: '.$e->getMessage());
+			}	
+		}
+
        
 
 	

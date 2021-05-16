@@ -419,8 +419,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherEven.php">Afficher</a></li>
+              <li><a class="" href="AjouterEven.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 		  
@@ -456,11 +456,13 @@
     <!--main content start-->
     <button><a href="Even.html">Ajouter un evenement</a></button>
 		<hr>
-		<table border=1 align = 'center'>
+		<table border=1 align = 'center'id="dataTable">
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="rechercher" title="type in a name"
 			<tr>
                 <th>Id_even</th>
 				<th>Nom_even</th>
-				<th>Date_even</th>
+				<th>Date_deb</th>
+        <th>Date_fin</th>
                 <th>Localisation</th>
 				<th>Description</th>
                 <th>Id_catg_even</th>
@@ -473,7 +475,8 @@
             		<tr>
                     <td><?PHP echo $even['Id_even']; ?></td>
 					<td><?PHP echo $even['Nom_even']; ?></td>
-					<td><?PHP echo $even['Date_even']; ?></td>
+					<td><?PHP echo $even['Date_deb']; ?></td>
+          <td><?PHP echo $even['Date_fin']; ?></td>
                     <td><?PHP echo $even['Localisation']; ?></td>
                     <td><?PHP echo $even['Description']; ?></td>
                     <td><?PHP echo $even['Id_catg_even']; ?></td>
@@ -492,6 +495,7 @@
 				}
 			?>
 		</table>
+    <a href="imprimerEven.php?id_even=<?PHP echo $even['Id_even']; ?>"id_even="id_even" name="id_even"> Imprimer </a>
     <!--main content end-->
   </section>
   <!-- container section start -->
@@ -582,6 +586,26 @@
         });
       });
     </script>
+      <script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("dataTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
 
 </body>
 

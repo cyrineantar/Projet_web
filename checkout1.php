@@ -1,50 +1,11 @@
-<?php
-    include_once '../Zina/Back/model/Commande.php';
-    include_once '../Zina/Back/controller/CommandeC.php';
-    include_once '../Zina/Back/controller/ClientC.php';
-    include_once '../Zina/Back/model/Client.php';
-    include_once '../Zina/Back/controller/LivraisonC.php';
-    include_once '../Zina/Back/model/Livraison.php';
+<?PHP
+	include "../Zina/Back/Controller/CommandeC.php";
     include "../Zina/Back/config.php";
+	$commandeC=new CommandeC();
+	$listeCommandes=$commandeC->recupererderniercommande();
 
-    $ClientC = new ClientC();
-    $listeClient= $ClientC->afficherClient();
-
-    $livraisonC = new LivraisonC();
-    $listeLivraison= $livraisonC ->afficher_livraison();
-
-    $error = "";
-
-    // create commande
-    $commande = null;
-
-    // create an instance of the controller
-    $commandeC = new CommandeC();
-    if (
-        isset($_POST["prix_total"]) && 
-        isset($_POST["id_client"]) &&
-        isset($_POST["id_livraison"]) 
-      
-    ) {
-        if (
-            !empty($_POST["prix_total"]) && 
-            !empty($_POST["id_client"]) && 
-            !empty($_POST["id_livraison"]) 
-          
-        ) {
-            $commande = new Commande(
-                $_POST['prix_total'],
-                $_POST['id_client'], 
-                $_POST['id_livraison'],
-               
-            );
-            $commandeC->ajouterCommande($commande);
-            header('Location:checkout1.php');
-        }
-        else
-            $error = "Missing information";
-        }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -118,7 +79,7 @@
             </li>
 	          <li class="nav-item"><a href="about.php" class="nav-link">About</a></li>
 	          <li class="nav-item"><a href="contact.php" class="nav-link">Contact</a></li>
-	          <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+	          <li class="nav-item cta cta-colored"><a href="cart.php" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
 
 	        </ul>
 	      </div>
@@ -141,90 +102,116 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-xl-8 ftco-animate">
-		  <form action="" method="POST" >                
-                <table align="center">
-            <tr>  
-               <td>
-                    <h3 style="color:#97daf5d5;"> 
-                    Add order
-            </h3>
-        </td> 
-    </tr>    
-                <tr>  
-                    <td>
-                        <label class="label"  for="prix_total">Price:
-                        </label>
-                    </td>
-                    <td><input class="controle" type="number" name="prix_total" id="prix_total" min="0" required /></td>
-                    <span class="resultat"></span>
-                </tr>
-                <tr>
+          
+		
 
-                <td>
-                        <label class="label" for="id_client">Id Customer:
-                        </label>
-                    </td>
-                <td>
-                    <select name="id_client" id="id_client" required >
-                     <option value="select" selected>Select</option>
-                        
-          <?php
-          foreach($listeClient as $ClientC){
-           ?>
-           <option value ='<?PHP echo $ClientC['Id_client']; ?>'> <?PHP echo $ClientC['Id_client']; ?></option>
-           <?php
-          }
-          ?>
-          </select>   
-          </td> 
-                    <span class="resultat"></span>
-                </tr>
-
-
-          <tr>
-
-                <td>
-                        <label class="label" for="id_livraison">Id delivery:
-                        </label>
-                    </td>
-                <td>
-                    <select name="id_livraison" id="id_livraison" required >
-                     <option value="select" selected>Select</option>
-                        
-          <?php
-          foreach($listeLivraison as $LivraisonC){
-           ?>
-           <option value ='<?PHP echo $LivraisonC['Id_livraison']; ?>'> <?PHP echo $LivraisonC['Id_livraison']; ?></option>
-           <?php
-          }
-          ?>
-          </select>   
-          </td> 
-                    <span class="resultat"></span>
-                </tr>
-                <tr>     
-                   
-                    
-
-
-                <tr>
-                   <td>
-                   
-                        <input type="submit" value="Add" class="btn btn-primary"> 
-                   
-                    </td>
-                    <td>
-                  
-                        <input type="reset" value="Exit" class="btn btn-primary" >
-                   
-                   </td>
-                </tr>
-            </table>
-        </form>
-
-
-
-	     
+		<div class="row mt-5 pt-3 d-flex">
+	          	<div class="col-md-6 d-flex">
+	          		<div class="cart-detail cart-total bg-light p-3 p-md-4">
+	          			<h3 class="billing-heading mb-4" style="color:#97daf5d5;" >Order List</h3>
+	          			<p class="d-flex">
+						  <?PHP
+				foreach($listeCommandes as $commande){
+			?>
+		    						<span>ID Order</span>
+		    						<span><?PHP echo $commande['Id_commande']; ?></span>
+		    					</p>
+		    					<p class="d-flex">
+		    						<span>Price </span>
+		    						<span><?PHP echo $commande['Prix_total']; ?>DT</span>
+		    					</p>
+		    					<p class="d-flex">
+		    						<span>Id Customer</span>
+		    						<span><?PHP echo $commande['Id_client']; ?></span>
+		    					</p>
+		    					
+		    					<p class="d-flex total-price">
+		    						<span>Id Delivery</span>
+		    						<span><?PHP echo $commande['Id_livraison']; ?></span>
+		    					</p>
+								<hr>
+		    					<p class="d-flex total-price">
+								<form method="POST" action="supprimerCheckout.php">
+						<input type="submit" name="supprimer" value="Delete" class="btn btn-primary">
+						<input type="hidden" value=<?PHP echo $commande['Id_commande']; ?> name="id_commande">
+						</form>
+		    					</p>
+								</div>
+								
+								
+	          	</div>
+				  <div class="row mt-10 pt-10 d-flex">
+	          	<div class="col-md-10 d-flex">
+	          		<div class="cart-detail cart-total bg-light p-10 p-md-10">
+	          		
+				  <a href="checkout.php" class="btn btn-primary">Add an order</a>
+</div>
+</div>
+</div>
+	          <div class="row mt-5 pt-3 d-flex">
+	          	<div class="col-md-6 d-flex">
+	          		<div class="cart-detail cart-total bg-light p-3 p-md-4">
+	          			<h3 class="billing-heading mb-4">Cart Total</h3>
+	          			<p class="d-flex">
+		    						<span>Item Price</span>
+		    						<span><?PHP echo $commande['Prix_total']; ?> DT</span>
+		    					</p>
+		    					<p class="d-flex">
+		    						<span>Delivery</span>
+		    						<span>7.00 DT</span>
+		    					</p>
+		    					<p class="d-flex">
+		    						<span>Discount</span>
+		    						<span>0.00DT</span>
+		    					</p>
+		    					<hr>
+		    					<p class="d-flex total-price">
+		    						<span>Total</span>
+		    						<span><?PHP echo $commande['Prix_total']+"7"; ?> DT</span>
+		    					</p>
+								</div>
+								<?PHP
+				}
+			?>
+	          	</div>
+	          	<div class="col-md-6">
+	          		<div class="cart-detail bg-light p-3 p-md-4">
+	          			<h3 class="billing-heading mb-4">Payment Method</h3>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+											   <label><input type="radio" name="optradio" class="mr-2"> Bank transfer</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+											   <label><input type="radio" name="optradio" class="mr-2"> Check Payment</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+											   <label><input type="radio" name="optradio" class="mr-2"> Pay Pal</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="checkbox">
+											   <label><input type="checkbox" value="" class="mr-2"> I have read and accept the terms and conditions</label>
+											</div>
+										</div>
+									</div>
+									<p><a href="checkout.php">Place an order</a></p>
+								</div>
+	          	</div>
+	          </div>
+          </div> <!-- .col-md-8 -->
+        </div>
+      </div>
     </section> <!-- .section -->
 
     <footer class="ftco-footer bg-light ftco-section">
@@ -301,38 +288,7 @@
       </div>
     </footer>
     
-    <style>
-input.controle {
-  outline:0;
-  font-size:14px;
-  width:250px;
-}	
-label.label {
-  display:inline-block;
-  width:200px;
-  text-align: right;
-  font-style: italic;
-  margin-right:5px;
-}
-input.controle:valid {
-  border:3px solid #0a0;
-}
-input.controle:invalid {
-  border:3px solid #a00;
-}
-input.controle:valid + span:before  {
-  content: "\f00c";
-  font-family: "fas fa-check";
-  color:#0a0;
-  font-size: 1.5em;
-}	
-input.controle:invalid + span:before  {
-  content: "\f00d";
-  font-family: "fas fa-times";
-  color:#a00;
-  font-size: 1.5em;
-}
-</style>
+  
 
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>

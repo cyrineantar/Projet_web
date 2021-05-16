@@ -496,7 +496,7 @@
         </div>
         
         <form action="" method="POST">
-            <table border="1" align="center">
+            <table border="2" align="center" class="table"">
 
                 <tr>
                     <td rowspan='6' colspan='1'>Fiche Personnelle</td>

@@ -1,3 +1,13 @@
+<?PHP
+    include_once '../Zina/Back/Model/Even.php';
+    include_once '../Zina/Back/Controller/EvenC.php';
+	include "../Zina/Back/config.php";
+	$evenC=new EvenC();
+	$listeEven=$evenC->afficherEven();
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -62,10 +72,10 @@
 	          <li class="nav-item dropdown active">
               <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
               <div class="dropdown-menu" aria-labelledby="dropdown04">
-              	<a class="dropdown-item" href="shop.html">Shop</a>
-                <a class="dropdown-item" href="product-single.html">Single Product</a>
-                <a class="dropdown-item" href="cart.html">Cart</a>
-                <a class="dropdown-item" href="checkout.html">Checkout</a>
+              	<a class="dropdown-item" href="shop.php">Shop</a>
+                <a class="dropdown-item" href="event.php">Event</a>
+                <a class="dropdown-item" href="cart.php">Cart</a>
+                <a class="dropdown-item" href="checkout.php">Checkout</a>
               </div>
             </li>
 	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
@@ -82,8 +92,8 @@
       <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
           <div class="col-md-9 ftco-animate text-center">
-          	<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span class="mr-2"><a href="index.html">Product</a></span> <span>Product Single</span></p>
-            <h1 class="mb-0 bread">Product Single</h1>
+          	<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span class="mr-2"><a href="index.html">Product</a></span> <span>Event</span></p>
+            <h1 class="mb-0 bread">Event</h1>
           </div>
         </div>
       </div>
@@ -92,59 +102,37 @@
     <section class="ftco-section">
     	<div class="container">
     		<div class="row">
-    			<div class="col-lg-6 mb-5 ftco-animate">
-    				<a href="images/menu-2.jpg" class="image-popup"><img src="images/product-3.jpg" class="img-fluid" alt="Colorlib Template"></a>
-    			</div>
+    			
     			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
-    				<h3>Young Woman Wearing Dress</h3>
-    				<div class="rating d-flex">
-							<p class="text-left mr-4">
-								<a href="#" class="mr-2">5.0</a>
-								<a href="#"><span class="ion-ios-star-outline"></span></a>
-								<a href="#"><span class="ion-ios-star-outline"></span></a>
-								<a href="#"><span class="ion-ios-star-outline"></span></a>
-								<a href="#"><span class="ion-ios-star-outline"></span></a>
-								<a href="#"><span class="ion-ios-star-outline"></span></a>
-							</p>
-							<p class="text-left mr-4">
-								<a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">Rating</span></a>
-							</p>
-							<p class="text-left">
-								<a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
-							</p>
-						</div>
-    				<p class="price"><span>$120.00</span></p>
-    				<p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-    				<p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word "and" and the Little Blind Text should turn around and return to its own, safe country. But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their.
-						</p>
-						<div class="row mt-4">
-							<div class="col-md-6">
-								<div class="form-group d-flex">
-		              <div class="select-wrap">
-	                  <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-	                </div>
-		            </div>
-							</div>
-							<div class="w-100"></div>
-							<div class="input-group col-md-6 d-flex mb-3">
-	             	<span class="input-group-btn mr-2">
-	                	<button type="button" class="quantity-left-minus btn"  data-type="minus" data-field="">
-	                   <i class="ion-ios-remove"></i>
-	                	</button>
-	            		</span>
-	             	<input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
-	             	<span class="input-group-btn ml-2">
-	                	<button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
-	                     <i class="ion-ios-add"></i>
-	                 </button>
-	             	</span>
-	          	</div>
-	          	<div class="w-100"></div>
-	          	<div class="col-md-12">
-	          		<p style="color: #000;">80 piece available</p>
-	          	</div>
-          	</div>
-          	<p><a href="cart.html" class="btn btn-black py-3 px-5">Add to Cart</a></p>
+    				<table align = 'center' class="table">
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search" title="type in a name"
+			<tr>
+                <th>Id Event</th>
+				<th>Event Name</th>
+				<th>Starting Date</th>
+                <th>Edning Date</th>
+                <th>Location</th>
+				<th>Description</th>
+                <th>Id Category Event</th>
+
+			</tr>
+
+			<?PHP
+				foreach($listeEven as $even){
+			?>
+            		<tr>
+                    <td><?PHP echo $even['Id_even']; ?></td>
+					<td><?PHP echo $even['Nom_even']; ?></td>
+					<td><?PHP echo $even['Date_deb']; ?></td>
+          <td><?PHP echo $even['Date_fin']; ?></td>
+                    <td><?PHP echo $even['Localisation']; ?></td>
+                    <td><?PHP echo $even['Description']; ?></td>
+                    <td><?PHP echo $even['Id_catg_even']; ?></td>
+				    </tr>
+			<?PHP
+				}
+			?>
+		</table>
     			</div>
     		</div>
     	</div>

@@ -455,7 +455,7 @@
     <!--main content start-->
     <button><a href="ajouterClient.php">Ajouter un Client</a></button>
 		<hr>
-		<table border=1 align = 'center' id="dataTable">
+		<table border=1 align = 'center' class="table">
 		<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Rechercher" title="type in a name"
 			<tr>
                 <th>Id_client</th>
@@ -465,8 +465,6 @@
 				<th>Adresse_client</th>
 				<th>Carte_fidelite</th>
 				<th>Mot_de_passe</th>
-				<th>supprimer</th>
-				<th>modifier</th>
 			</tr>
 
 			<?PHP

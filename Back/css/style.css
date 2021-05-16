@@ -9909,3 +9909,10 @@ span.customSelect.changed {
 	top:20px;
 	
 }
+
+.table {
+	width:100%;
+	border:1px solid $color-form-highlight;
+}
+
+

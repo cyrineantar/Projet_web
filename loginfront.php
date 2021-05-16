@@ -1,3 +1,7 @@
+<?php
+session_start()
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +42,7 @@
         <p class="login-img"><i class="icon_lock_alt"></i></p>
         <div class="input-group">
           <span class="input-group-addon"><i class="icon_profile"></i></span>
-          <input class="form-control" type="text" placeholder="Your name" name="username" required>
+          <input class="form-control" type="text" placeholder="Your ID" name="username" required>
         </div>
         <div class="input-group">
           <span class="input-group-addon"><i class="icon_key_alt"></i></span>
@@ -67,7 +71,13 @@
     </div>
   </div>
 
+<?php
+// remove all session variables
+session_unset();
 
+// destroy the session
+session_destroy();
+?>
 </body>
 
 </html>

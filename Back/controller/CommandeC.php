@@ -25,7 +25,7 @@
 
         function afficherCommandes(){
 			
-			$sql="SELECT * FROM commandes";
+			$sql="SELECT * FROM commandes order by prix_total ASC";
 			$db = config::getConnexion();
 			try{
 				$liste = $db->query($sql);
@@ -101,6 +101,19 @@
 			catch (Exception $e){
 				die('Erreur: '.$e->getMessage());
 			}
+		}
+
+		function recupererderniercommande(){
+			
+			$sql="SELECT * FROM commandes order by id_commande DESC limit 1";
+			$db = config::getConnexion();
+			try{
+				$liste = $db->query($sql);
+				return $liste;
+			}
+			catch (Exception $e){
+				die('Erreur: '.$e->getMessage());
+			}	
 		}
 		
 

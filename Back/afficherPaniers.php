@@ -368,8 +368,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="afficherArticles.php">Afficher</a></li>
-              <li><a class="" href="ajouterArticle.php"><span>Ajouter</span></a></li>
+              <li><a class="" href="profile.html">Afficher</a></li>
+              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
             </ul>
           </li>
           <li class="sub-menu">
@@ -379,20 +379,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="afficher_categorie.php">Afficher</a></li>
-              <li><a class="" href="ajouter_categorie.php"><span>Ajouter</span></a></li>
-            </ul>
-          </li>
-		  
-		  <li class="sub-menu">
-            <a href="javascript:;" class="">
-                          <i class="icon_documents_alt"></i>
-                          <span>Categories-Even</span>
-                          <span class="menu-arrow arrow_carrot-right"></span>
-                      </a>
-              <ul class="sub">
-              <li><a class="" href="afficherCategorie.php">Afficher</a></li>
-              <li><a class="" href="ajoutCategorie.php"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherCategorie.html">Afficher</a></li>
+              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
             </ul>
           </li>
 
@@ -403,10 +391,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
             <ul class="sub">
-              <li><a class="" href="afficher_livraison.php">Afficher Livraisons</a></li>
-              <li><a class="" href="ajouter_livraison.php"><span>Ajouter Livraisons</span></a></li>
-			  <li><a class="" href="afficher_livreur.php">Afficher Livreurs</a></li>
-              <li><a class="" href="ajouter_livreur.php"><span>Ajouter Livreurs</span></a></li>
+              <li><a class="" href="profile.html">Afficher</a></li>
+              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
             </ul>
           </li>
 
@@ -430,7 +416,7 @@
                       </a>
               <ul class="sub">
               <li><a class="" href="afficherPaniers.php">Afficher</a></li>
-              <li><a class="" href="AjouterPanier.php"><span>Ajouter</span></a></li>
+              <li><a class="" href="ajouterPanier.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 
@@ -454,7 +440,8 @@
     <!--main content start-->
     <button><a href="ajouterPanier.php">Ajouter un Panier</a></button>
 		<hr>
-		<table border=1 align = 'center'>
+		<table class="table" align = 'center'id="dataTable">
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="rechercher" title="type in a name"
 			<tr>
 				<th>Id_panier</th>
 				<th>Ref_article</th>
@@ -486,6 +473,7 @@
 				}
 			?>
 		</table>
+    <a href="imprimerPanier.php?id_panier=<?PHP echo $panier['Id_panier']; ?>"> Imprimer</a>
     <!--main content end-->
   </section>
   <!-- container section start -->
@@ -576,6 +564,26 @@
         });
       });
     </script>
+    <script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("dataTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
 
 </body>
 

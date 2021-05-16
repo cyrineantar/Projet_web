@@ -2,6 +2,7 @@
 	include "../Back/controller/AdminC.php";
 	include_once '../Back/model/Admin.php';
     include "../Back/config.php";
+	session_start();
 	$adminC=new AdminC();
 	$listeAdmin=$adminC->afficherAdmin();
     $listeAdmin=$adminC->trierNomAdmin();
@@ -278,7 +279,15 @@
                             <span class="profile-ava">
                                 <img alt="" src="img/avatar1_small.jpg">
                             </span>
-                            <span class="username">Jenifer Smith</span>
+                            <span class="username">
+							<?php
+                            if($_SESSION['username'] !== ""){
+                            $user = $_SESSION['username'];
+							
+// Echo session variables that were set on previous page
+                            echo $user ;
+							}
+                            ?></span>
                             <b class="caret"></b>
                         </a>
             <ul class="dropdown-menu extended logout">
@@ -460,8 +469,8 @@
                 <div class="form">
                   <button><a href="ajouterAdmin.php">Ajouter un Admin</a></button>
 		<hr>
-		<table border=1 align = 'center' id="dataTable">
-		<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Rechercher" title="type in a name"
+		<table border=1 align = 'center' class="table">
+		<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Rechercher" title="type in a name">
 			<tr>
                 <th>Id_admin</th>
 				<th>Nom_admin</th>

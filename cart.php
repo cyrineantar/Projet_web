@@ -1,7 +1,18 @@
 <?php
     include_once '../Zina/Back/model/Panier.php';
     include_once '../Zina/Back/controller/PanierC.php';
+    include_once '../Zina/Back/model/Commande.php';
+    include_once '../Zina/Back/controller/CommandeC.php';
+    include "../Zina/Back/model/Article.php";
+	include "../Zina/Back/controller/ArticleC.php";
     include "../Zina/Back/config.php";
+
+    $commandeC = new CommandeC();
+    $listecommandes= $commandeC -> afficherCommandes();
+     
+    $ArticleC=new ArticleC();
+	$listeArticle=$ArticleC->afficher_article();
+    
 
     $error = "";
 
@@ -29,7 +40,7 @@
                
             );
             $panierC->ajouterPanier($panier);
-            header('Location:afficherPaniers.php');
+            header('Location:cart1.php');
             
         }
         else
@@ -101,10 +112,10 @@
 	          <li class="nav-item dropdown active">
               <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
               <div class="dropdown-menu" aria-labelledby="dropdown04">
-              	<a class="dropdown-item" href="shop.html">Shop</a>
+              	<a class="dropdown-item" href="shop.php">Shop</a>
                 <a class="dropdown-item" href="product-single.html">Single Product</a>
                 <a class="dropdown-item" href="cart.php">Cart</a>
-                <a class="dropdown-item" href="checkout.html">Checkout</a>
+                <a class="dropdown-item" href="checkout.php">Checkout</a>
               </div>
             </li>
 	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
@@ -133,109 +144,79 @@
 				<div class="row">
     			<div class="col-md-12 ftco-animate">
     				<div class="cart-list">
-	    				<table class="table">
-						    <thead class="thead-primary">
-						      <tr class="text-center">
-						        <th>&nbsp;</th>
-						        <th>&nbsp;</th>
-						        <th>Product</th>
-						        <th>Price</th>
-						        <th>Quantity</th>
-						        <th>Total</th>
-						      </tr>
-						    </thead>
-						    <tbody>
-						      <tr class="text-center">
-						        <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
-						        
-						        <td class="image-prod"><div class="img" style=""></div></td>
-						        
-						        <td class="product-name">
-						        	<h3></h3>
-						        	<p></p>
-						        </td>
-						        
-						        <td class="price"></td>
-						        
-						        <td class="quantity">
-						        	<div class="input-group mb-3">
-					             	<input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-					          	</div>
-					          </td>
-						        
-						        <td class="total"></td>
-						      </tr><!-- END TR-->
-
-						      <tr class="text-center">
-							  <div id_panier="error">
-            <?php echo $error; ?>
-        </div>
-        
-        <form action="" method="POST">
-            <table border="1" align="center">
-
+	    				<form action="" method="POST" >                
+                <table align="center">
+            <tr>  
+               <td>
+                    <h3 style="color:#97daf5d5;"> 
+                    Add Basket
+            </h3>
+        </td> 
+    </tr>    
+               
                 <tr>
-                    <td rowspan='2' colspan='1'>Ajouter un Panier</td>
-                    <td>
-                        <label for="ref_article">Ref_article:
+
+                <td>
+                        <label class="label" for="id_commande">Id order:
                         </label>
                     </td>
-                    <td><input type="number" name="ref_article" id_panier="ref_article" maxlength="20"></td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="id_commande">Id_commande:
-                        </label>
-                    </td>
-                    <td><input type="number" name="id_commande" id_panier="id_commande" maxlength="20"></td>
+                <td>
+                    <select name="id_commande" id="id_commande" required >
+                     <option value="select" selected>Select</option>
+                        
+          <?php
+          foreach($listecommandes as $commandeC){
+           ?>
+           <option value ='<?PHP echo $commandeC['Id_commande']; ?>'> <?PHP echo $commandeC['Id_commande']; ?></option>
+           <?php
+          }
+          ?>
+          </select>   
+          </td> 
+                    <span class="resultat"></span>
                 </tr>
 
-                <tr>
-                    <td></td>
-                    <td>
-                        <input type="submit" value="Envoyer"> 
+
+          <tr>
+
+                <td>
+                        <label class="label" for="ref_article">Ref item
+:
+                        </label>
+                    </td>
+                <td>
+                    <select name="ref_article" id="ref_article" required >
+                     <option value="select" selected>Select</option>
+                        
+          <?php
+          foreach($listeArticle as $ArticleC){
+           ?>
+           <option value ='<?PHP echo $ArticleC['Ref_article']; ?>'> <?PHP echo $ArticleC['Ref_article']; ?></option>
+           <?php
+          }
+          ?>
+          </select>   
+          </td> 
+                    <span class="resultat"></span>
+                </tr>    
+                 <tr>
+                   <td>
+                   
+                        <input type="submit" value="Add" class="btn btn-primary"> 
+                   
                     </td>
                     <td>
-                        <input type="reset" value="Annuler" >
-                    </td>
+                  
+                        <input type="reset" value="Exit" class="btn btn-primary" >
+                   
+                   </td>
                 </tr>
             </table>
         </form>
-						        
-								
-								
-								
-						      </tr><!-- END TR-->
-						    </tbody>
-						  </table>
 					  </div>
     			</div>
     		</div>
-    		<div class="row justify-content-center">
-    			<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
-    				<div class="cart-total mb-3">
-    					<h3>Cart Totals</h3>
-    					<p class="d-flex">
-    						<span>Subtotal</span>
-    						<span>$20.60</span>
-    					</p>
-    					<p class="d-flex">
-    						<span>Delivery</span>
-    						<span>$0.00</span>
-    					</p>
-    					<p class="d-flex">
-    						<span>Discount</span>
-    						<span>$3.00</span>
-    					</p>
-    					<hr>
-    					<p class="d-flex total-price">
-    						<span>Total</span>
-    						<span>$17.60</span>
-    					</p>
-    				</div>
-    				<p class="text-center"><a href="checkout.php" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
-    			</div>
-    		</div>
+    	
 			</div>
 		</section>
 

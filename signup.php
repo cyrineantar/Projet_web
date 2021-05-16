@@ -61,8 +61,8 @@
   <div class="left">
     <h1>Sign up</h1>
     
-    <input type="text" name="nom_client" id_client="nom_client" placeholder="Name" />
-	<input type="text" name="prenom_client" id_client="prenom_client" placeholder="Last Name" />
+    <input type="text" name="nom_client" id_client="nom_client" placeholder="Userame" />
+	<input type="text" name="prenom_client" id_client="prenom_client" placeholder="Full Name" />
 	<div class="input_field">
 	          <input type="radio" name="radiogroup1" id="rd1">
               <label for="rd1">Male</label>
@@ -73,7 +73,7 @@
 	<input type="number" name="num_client" id_client="num_client" placeholder="Phone Number" />
 	<input type="number" name="carte_fidelite" id_client="carte_fidelite" placeholder="Fidelity card" />
     <input type="password" name="mot_de_passe" id_client="mot_de_passe" placeholder="Password" />
-	    <input type="submit" name="signup_submit" value="Sign me up" />
+	<button type="submit" name="signup_submit" onclick="showAlert()" >Sign me up</button>
   </div>
   
   <div class="right">
@@ -85,6 +85,9 @@
   </div>
   <div class="or">OR</div>
 </div>
+
 </form>
+</form>
+    <script src="js/submit.js"> </script>
 </body>
 </html>

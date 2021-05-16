@@ -1,4 +1,9 @@
+<?php
+    session_start();
+    include "../Zina/idcall.php";
+    include "../Zina/namecall.php";
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -64,19 +69,27 @@
 	          <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
               <div class="dropdown-menu" aria-labelledby="dropdown04">
-              	<a class="dropdown-item" href="shop.html">Shop</a>
-                <a class="dropdown-item" href="product-single.html">Single Product</a>
-                <a class="dropdown-item" href="cart.html">Cart</a>
-                <a class="dropdown-item" href="checkout.html">Checkout</a>
+              	<a class="dropdown-item" href="shop.php">Shop</a>
+                <a class="dropdown-item" href="event.php">Event</a>
+                <a class="dropdown-item" href="cart.php">Cart</a>
+                <a class="dropdown-item" href="checkout.php">Checkout</a>
               </div>
             </li>
 	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
 	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
 	          <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[2]</a></li>
               <li class="nav-item dropdown">
-			  <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ahmed</a>
+			  <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			  <?php
+
+                            if($_SESSION['username'] !== ""){
+
+                            echo $reponse['prenom_client'];
+							}
+							?>
+			 </a>
 			  <div class="dropdown-menu" aria-labelledby="dropdown04">
-                <a class="dropdown-item" href="myprofile.php">My Profile</a>
+                <a class="dropdown-item" href="myprofile.php?Id_client=<?PHP echo $repo['Id_client']; ?> " Id_client="Id_client" name="Id_client" > My Profile </a>
                 <a class="dropdown-item" href="index.html">Log Out</a>
               </div>
 			  </li>
@@ -726,6 +739,6 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
-    
+
   </body>
 </html>

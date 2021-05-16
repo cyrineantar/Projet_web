@@ -12,7 +12,8 @@
     $evenC = new EvenC();
     if (
         isset($_POST["nom_even"]) && 
-        isset($_POST["date_even"]) && 
+        isset($_POST["date_deb"]) && 
+        isset($_POST["date_fin"]) && 
         isset($_POST["localisation"]) &&
         isset($_POST["description"]) &&  
         isset($_POST["id_catg_even"]) 
@@ -20,7 +21,8 @@
     ) {
         if (
             !empty($_POST["nom_even"]) && 
-            !empty($_POST["date_even"]) && 
+            !empty($_POST["date_deb"]) && 
+            !empty($_POST["date_fin"]) && 
             !empty($_POST["localisation"]) && 
             !empty($_POST["description"]) && 
             !empty($_POST["id_catg_even"]) 
@@ -28,7 +30,8 @@
         ) {
             $even = new Even(
                 $_POST['nom_even'],
-                $_POST['date_even'],
+                $_POST['date_deb'],
+                $_POST['date_fin'],
                 $_POST['localisation'],
                 $_POST['description'],
                 $_POST['id_catg_even'] 
@@ -456,8 +459,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherEven.php">Afficher</a></li>
+              <li><a class="" href="AjouterEven.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 		  
@@ -507,10 +510,17 @@
                 </tr>
                 <tr>
                     <td>
-                        <label for="date_even">Date_even:
+                        <label for="date_deb">Date_deb:
                         </label>
                     </td>
-                    <td><input type="date" name="date_even" id="date_even" maxlength="20"></td>
+                    <td><input type="date" name="date_deb" id="date_deb" maxlength="20"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="date_fin">Date_fin:
+                        </label>
+                    </td>
+                    <td><input type="date" name="date_fin" id="date_fin" maxlength="20"></td>
                 </tr>
 
                 <tr>

@@ -483,10 +483,9 @@
               <div class="panel-body">
                 <div class="form">
                   <form action="" method="POST">
-            <table border="1" align="center">
+            <table border="" align="center" class="table">
 
                 <tr>
-                    <td rowspan='6' colspan='1'>Fiche Personnelle</td>
                     <td>
                         <label for="nom_admin">Nom admin:
                         </label>
@@ -504,8 +503,7 @@
                     <td></td>
                     <td>
                         <input type="submit" value="Envoyer"> 
-                    </td>
-                    <td>
+                    
                         <input type="reset" value="Annuler" >
                     </td>
                 </tr>
