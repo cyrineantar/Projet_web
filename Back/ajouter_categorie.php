@@ -2,6 +2,9 @@
     include_once '../Back/model/Categorie.php';
     include_once '../Back/controller/CategorieC.php';
     include "../Back/config.php";
+
+    session_start();
+    include "../Back/namecall.php";
     $error = "";
 
     // create commande
@@ -11,20 +14,20 @@
     $categorieC = new CategorieC();
     if (
         //isset($_POST["Id_categorie"]) && 
-        isset($_POST["Nom_categorie"]) &&
-        isset($_POST["Type_categorie"]) 
+        isset($_POST["Nom_categorie"])
+        
       
     ) {
         if (
             //!empty($_POST["Id_categorie"]) && 
-            !empty($_POST["Nom_categorie"]) && 
-            !empty($_POST["Type_categorie"]) 
+            !empty($_POST["Nom_categorie"])  
+            
           
         ) {
             $categorie = new Categorie(
                // $_POST['Id_categorie'],
                 $_POST['Nom_categorie'], 
-                $_POST['Type_categorie'],
+               
                
             );
             $categorieC->ajouter_categorie($categorie);
@@ -311,7 +314,14 @@
                             <span class="profile-ava">
                                 <img alt="" src="img/avatar1_small.jpg">
                             </span>
-                            <span class="username">Jenifer Smith</span>
+							
+                            <span class="username">
+							<?php
+                            if($_SESSION['username'] !== ""){
+
+                            echo $reponse['nom_admin'];
+							}
+                            ?></span>
                             <b class="caret"></b>
                         </a>
             <ul class="dropdown-menu extended logout">
@@ -329,7 +339,7 @@
                 <a href="#"><i class="icon_chat_alt"></i> Chats</a>
               </li>
               <li>
-                <a href="login.html"><i class="icon_key_alt"></i> Log Out</a>
+                <a href="login.php"><i class="icon_key_alt"></i> Log Out</a>
               </li>
               <li>
                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
@@ -352,7 +362,7 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <a class="" href="index.html">
+            <a class="" href="index.php">
                           <i class="icon_house_alt"></i>
                           <span>Dashboard</span>
                       </a>
@@ -446,8 +456,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherEven.php">Afficher</a></li>
+              <li><a class="" href="AjouterEven.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 		  
@@ -507,15 +517,7 @@
                     <td><input type="text" name="Nom_categorie" Id_categorie="Nom_categorie" maxlength="20"></td>
                 </tr>
                 
-                <tr>
-                    <td>
-                        <label for="Type_categorie">Type_categorie:
-                        </label>
-                    </td>
-                    <td>
-                        <input type="text" name="Type_categorie"Id_categorie="Type_categorie" maxlength="20">
-                    </td>
-                </tr>
+                
                 <tr>
                     <td></td>
                     <td>
@@ -525,6 +527,65 @@
                         <input type="reset" value="Annuler" >
                     </td>
                 </tr>
+
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js">
+            </script>
+            
+      
+        <style>
+
+        body{
+        padding:10% 3% 10% 3%;
+        text-align:center;
+        }
+        img{
+            height:40px;
+                width:40px; 
+        }
+        h1{
+        color: #32a852;
+        }
+        .mode {
+            float:right;
+        }
+        .change {
+            cursor: pointer;
+            border: 1px solid #555;
+            border-radius: 40%;
+            width: 20px;
+            text-align: center;
+            padding: 5px;
+            margin-left: 8px;
+        }
+        .dark{
+            background-color: #222;
+            color: #e6e6e6;
+        }
+    </style>
+       mode->
+        Dark mode:             
+        <span class="change">OFF</span>
+    </div>
+      
+    <div>
+        
+      
+        <p>
+            
+        </p>
+    </div>
+      
+    <script>
+        $( ".change" ).on("click", function() {
+            if( $( "body" ).hasClass( "dark" )) {
+                $( "body" ).removeClass( "dark" );
+                $( ".change" ).text( "OFF" );
+            } else {
+                $( "body" ).addClass( "dark" );
+                $( ".change" ).text( "ON" );
+            }
+        });
+    </script>
             </table>
         </form>
     <!--main content end-->

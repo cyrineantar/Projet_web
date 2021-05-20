@@ -55,39 +55,37 @@
             <?php echo $error; ?>
         </div>
         
-        <form action="" method="POST">
+        <form id="myForm" action="" method="POST" onsubmit="return verifform(this)">
 <div id="login-box">
 
   <div class="left">
     <h1>Sign up</h1>
     
     <input type="text" name="nom_client" id_client="nom_client" placeholder="Userame" />
-	<input type="text" name="prenom_client" id_client="prenom_client" placeholder="Full Name" />
+	<input type="text" name="prenom_client" id_client="prenom_client" placeholder="Full Name" onblur="allLetter(this)" />
 	<div class="input_field">
 	          <input type="radio" name="radiogroup1" id="rd1">
               <label for="rd1">Male</label>
               <input type="radio" name="radiogroup1" id="rd2">
               <label for="rd2">Female</label>
               </div>
-    <input type="text" name="adresse_client" id_client="adresse_client" placeholder="E-mail" />
-	<input type="number" name="num_client" id_client="num_client" placeholder="Phone Number" />
-	<input type="number" name="carte_fidelite" id_client="carte_fidelite" placeholder="Fidelity card" />
+    <input type="text" name="adresse_client" id_client="adresse_client" placeholder="E-mail" onblur="checkEmail(this.value)" />
+	<input type="number" name="num_client" maxlength="8" id_client="num_client" placeholder="Phone Number" onblur="allnumeric(this)" />
+	<input type="number" name="carte_fidelite" maxlength="10" id_client="carte_fidelite" placeholder="Fidelity card" onblur="allnumeric(this)" />
     <input type="password" name="mot_de_passe" id_client="mot_de_passe" placeholder="Password" />
-	<button type="submit" name="signup_submit" onclick="showAlert()" >Sign me up</button>
+	<button type="submit" class="social-signin google" name="signup_submit" onclick="showAlert()" >Sign me up</button>
   </div>
-  
+  </form>
   <div class="right">
-    <span class="loginwith">Sign in with<br />social network</span>
-    
-    <button class="social-signin facebook">Log in with facebook</button>
-    <button class="social-signin twitter">Log in with Twitter</button>
-    <button class="social-signin google">Log in with Google+</button>
+    <span class="loginwith">Already registered ?</span>
+	<form action="http://localhost/goweb/Zina/loginfront.php">
+    <button type="submit" class="social-signin facebook"> Login </button>
+    </form>
   </div>
   <div class="or">OR</div>
 </div>
 
-</form>
-</form>
+
     <script src="js/submit.js"> </script>
 </body>
 </html>

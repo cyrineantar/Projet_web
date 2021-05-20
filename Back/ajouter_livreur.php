@@ -3,6 +3,8 @@
     include_once '../Back/controller/LivreurC.php';
 	include "../Back/config.php";
 
+	session_start();
+  include "../Back/namecall.php";
     $error = "";
 
     // create livreur
@@ -10,18 +12,24 @@
 
     // create an instance of the controller
     $livreurC = new LivreurC();
+    $livreur1C = new LivreurC();
+	$listelivreur= $livreur1C->listelivreur();
     if (
         
         isset($_POST["Nom_livreur"]) &&
         isset($_POST["Num_livreur"]) &&
-        isset($_POST["Destination"]) 
+        isset($_POST["Destination"]) &&
+        isset($_POST["Id_livraison"])
+        
        )
     {
         if (
             
             !empty($_POST["Nom_livreur"]) &&
             !empty($_POST["Num_livreur"]) &&
-            !empty($_POST["Destination"]) 
+            !empty($_POST["Destination"]) &&
+            !empty($_POST["Id_livraison"]) 
+
 
           
         ) {
@@ -29,7 +37,9 @@
                 
                 ($_POST["Nom_livreur"]) ,
                 ($_POST["Num_livreur"]) ,
-                ($_POST["Destination"]) 
+                ($_POST["Destination"]) ,
+                ($_POST["Id_livraison"]) 
+
                
             );
             $livreurC->ajouter_livreur($livreur);
@@ -316,7 +326,14 @@
                             <span class="profile-ava">
                                 <img alt="" src="img/avatar1_small.jpg">
                             </span>
-                            <span class="username">Jenifer Smith</span>
+							
+                            <span class="username">
+							<?php
+                            if($_SESSION['username'] !== ""){
+
+                            echo $reponse['nom_admin'];
+							}
+                            ?></span>
                             <b class="caret"></b>
                         </a>
             <ul class="dropdown-menu extended logout">
@@ -334,7 +351,7 @@
                 <a href="#"><i class="icon_chat_alt"></i> Chats</a>
               </li>
               <li>
-                <a href="login.html"><i class="icon_key_alt"></i> Log Out</a>
+                <a href="login.php"><i class="icon_key_alt"></i> Log Out</a>
               </li>
               <li>
                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
@@ -351,13 +368,13 @@
     </header>
     <!--header end-->
 
-     <!--sidebar start-->
+    <!--sidebar start-->
     <aside>
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <a class="" href="index.html">
+            <a class="" href="index.php">
                           <i class="icon_house_alt"></i>
                           <span>Dashboard</span>
                       </a>
@@ -451,8 +468,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherEven.php">Afficher</a></li>
+              <li><a class="" href="AjouterEven.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 		  
@@ -477,11 +494,11 @@
       <section class="wrapper">
         <div class="row">
           <div class="col-lg-12">
-            <h3 class="page-header"><i class="fa fa-files-o"></i>Ajouter Commandes</h3>
+            <h3 class="page-header"><i class="fa fa-files-o"></i>Ajouter Livreurs</h3>
             <ol class="breadcrumb">
               <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
-              <li><i class="icon_document_alt"></i>Gestion des Commandes</li>
-              <li><i class="fa fa-files-o"></i>Ajouter Commandes</li>
+              <li><i class="icon_document_alt"></i>Gestion des Livreurs</li>
+              <li><i class="fa fa-files-o"></i>Ajouter Livreurs</li>
             </ol>
           </div>
         </div>
@@ -496,23 +513,23 @@
             <table border="1" align="center">
 
                 <tr>
-                    <td rowspan='4' colspan='1'>Ajouter un livreur</td>
+                    <td rowspan='5' colspan='1'>Ajouter un livreur</td>
                     <td>
-                        <label for="Id_livreur">Id_livreur:
+                        <label for="Id_livreur">Id livreur:
                         </label>
                         <td><input type="number" name="Id_livreur" Id_livreur="Id_livreur" maxlength="20"></td>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <label for="Nom_livreur">Nom_livreur:
+                        <label for="Nom_livreur">Nom livreur:
                         </label>
                     </td>
                     <td><input type="text" name="Nom_livreur" Id_livreur="Nom_livreur" maxlength="20"></td>
                 </tr>
                 <tr>
                     <td>
-                        <label for="Num_livreur">Num_livreur:
+                        <label for="Num_livreur">Num livreur:
                         </label>
                     </td>
                     <td>
@@ -527,6 +544,24 @@
                     <td>
                         <input type="text" name="Destination" Id_livreur="Destination" maxlength="20">
                     </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="Id_livraison">Id livraison:
+                        </label>
+                    </td>
+                     <td>
+                     <select name="Id_livraison" id="Id_livraison" required >
+                     <option value="select" selected>Select</option>  
+                    <?php
+                      foreach($listelivreur as $listeC){
+                       ?>
+                        <option value ='<?PHP echo $listeC['Id_livraison']; ?>'> <?PHP echo $listeC['Id_livraison']; ?> </option>
+                        <?php
+                          }
+                         ?>
+                     </select>   
+                </td> 
                 </tr>
                 <tr>
                     <td></td>

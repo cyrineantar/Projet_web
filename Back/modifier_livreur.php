@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -275,7 +274,8 @@
                             <span class="profile-ava">
                                 <img alt="" src="img/avatar1_small.jpg">
                             </span>
-                            <span class="username">Jenifer Smith</span>
+							
+                            <span class="username"></span>
                             <b class="caret"></b>
                         </a>
             <ul class="dropdown-menu extended logout">
@@ -293,7 +293,7 @@
                 <a href="#"><i class="icon_chat_alt"></i> Chats</a>
               </li>
               <li>
-                <a href="login.html"><i class="icon_key_alt"></i> Log Out</a>
+                <a href="login.php"><i class="icon_key_alt"></i> Log Out</a>
               </li>
               <li>
                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
@@ -316,7 +316,7 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <a class="" href="index.html">
+            <a class="" href="index.php">
                           <i class="icon_house_alt"></i>
                           <span>Dashboard</span>
                       </a>
@@ -361,8 +361,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherArticles.php">Afficher</a></li>
+              <li><a class="" href="ajouterArticle.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
           <li class="sub-menu">
@@ -410,8 +410,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherEven.php">Afficher</a></li>
+              <li><a class="" href="AjouterEven.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 		  
@@ -436,16 +436,16 @@
       <section class="wrapper">
         <div class="row">
           <div class="col-lg-12">
-            <h3 class="page-header"><i class="fa fa-files-o"></i>Ajouter Commandes</h3>
+            <h3 class="page-header"><i class="fa fa-files-o"></i>Modifier Livreurs</h3>
             <ol class="breadcrumb">
               <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
-              <li><i class="icon_document_alt"></i>Gestion des Commandes</li>
-              <li><i class="fa fa-files-o"></i>Ajouter Commandes</li>
+              <li><i class="icon_document_alt"></i>Gestion des Livreurs</li>
+              <li><i class="fa fa-files-o"></i>Modifier Livreurs</li>
             </ol>
           </div>
         </div>
     <!--main content start-->
-    <button><a href="afficher_livraison.php">Retour à la liste</a></button>
+    <button><a href="afficher_livreur.php">Retour à la liste</a></button>
 <hr>
 
 <form action="update_livreur.php" method="POST">
@@ -453,7 +453,7 @@
 
     <tr>
             <td>
-                <label for="Id_livreur"> Id_livreur</label>
+                <label for="Id_livreur"> Id livreur</label>
             </td>
             <td>
             <input type="int" Id_livreur="Id_livreur" name="Id_livreur"placeholder="Id_livreur">
@@ -463,20 +463,20 @@
 
             <tr>
                 <td>
-                    <label for="Nom_livreur">Nom_livreur</label>
+                    <label for="Nom_livreur">Nom livreur</label>
                     
                     </td>
                     <td>
-                        <input type="text" Id_livraison="Nom_livreur" name="Nom_livreur" placeholder="Nom_livreur">
+                        <input type="text" Id_livreur="Nom_livreur" name="Nom_livreur" placeholder="Nom_livreur">
                     </td>
             </tr>
             <tr>
                 <td>
-                    <label for="Num_livreur">Num_livreur</label>
+                    <label for="Num_livreur">Num livreur</label>
                     
                     </td>
                     <td>
-                        <input type="int" Id_livraison="Num_livreur" name="Num_livreur" placeholder="Num_livreur">
+                        <input type="int" Id_livreur="Num_livreur" name="Num_livreur" placeholder="Num_livreur">
                     </td>
             </tr>
             <tr>
@@ -485,7 +485,7 @@
                     
                     </td>
                     <td>
-                        <input type="text" Id_livraison="Destination" name="Destination" placeholder="Destination">
+                        <input type="text" Id_livreur="Destination" name="Destination" placeholder="Destination">
                     </td>
             </tr>
     

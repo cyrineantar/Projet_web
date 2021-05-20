@@ -1,7 +1,19 @@
 <?php
-	include "../Back/controller/CommandeC.php";
-	include_once '../Back/Model/Commande.php';
-    include "../Back/config.php";
+include_once '../Back/model/Commande.php';
+include_once '../Back/controller/CommandeC.php';
+include_once '../Back/controller/ClientC.php';
+include_once '../Back/model/Client.php';
+include_once '../Back/controller/LivraisonC.php';
+include_once '../Back/model/Livraison.php';
+include "../Back/config.php";
+
+session_start();
+include "../Back/namecall.php";
+$ClientC = new ClientC();
+$listeClient= $ClientC->afficherClient();
+
+$livraisonC = new LivraisonC();
+$listeLivraison= $livraisonC ->afficher_livraison();
 
 	$commandeC = new CommandeC();
 	$error = "";
@@ -25,7 +37,7 @@
 			);
 			
             $commandeC->modifierCommande($commande, $_GET['id_commande']);
-            header('refresh:5;url=afficherCommandes.php');
+            header('refresh:0;url=afficherCommandes.php');
         }
         else
             $error = "Missing information";
@@ -308,7 +320,14 @@
                             <span class="profile-ava">
                                 <img alt="" src="img/avatar1_small.jpg">
                             </span>
-                            <span class="username">Jenifer Smith</span>
+							
+                            <span class="username">
+							<?php
+                            if($_SESSION['username'] !== ""){
+
+                            echo $reponse['nom_admin'];
+							}
+                            ?></span>
                             <b class="caret"></b>
                         </a>
             <ul class="dropdown-menu extended logout">
@@ -326,7 +345,7 @@
                 <a href="#"><i class="icon_chat_alt"></i> Chats</a>
               </li>
               <li>
-                <a href="login.html"><i class="icon_key_alt"></i> Log Out</a>
+                <a href="login.php"><i class="icon_key_alt"></i> Log Out</a>
               </li>
               <li>
                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
@@ -349,7 +368,7 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <a class="" href="index.html">
+            <a class="" href="index.php">
                           <i class="icon_house_alt"></i>
                           <span>Dashboard</span>
                       </a>
@@ -394,8 +413,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherArticles.php">Afficher</a></li>
+              <li><a class="" href="ajouterArticle.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
           <li class="sub-menu">
@@ -405,8 +424,20 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="afficherCategorie.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficher_categorie.php">Afficher</a></li>
+              <li><a class="" href="ajouter_categorie.php"><span>Ajouter</span></a></li>
+            </ul>
+          </li>
+		  
+		  <li class="sub-menu">
+            <a href="javascript:;" class="">
+                          <i class="icon_documents_alt"></i>
+                          <span>Categories-Even</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+              <ul class="sub">
+              <li><a class="" href="afficherCategorie.php">Afficher</a></li>
+              <li><a class="" href="ajoutCategorie.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 
@@ -417,8 +448,10 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
             <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficher_livraison.php">Afficher Livraisons</a></li>
+              <li><a class="" href="ajouter_livraison.php"><span>Ajouter Livraisons</span></a></li>
+			  <li><a class="" href="afficher_livreur.php">Afficher Livreurs</a></li>
+              <li><a class="" href="ajouter_livreur.php"><span>Ajouter Livreurs</span></a></li>
             </ul>
           </li>
 
@@ -429,8 +462,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherEven.php">Afficher</a></li>
+              <li><a class="" href="AjouterEven.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 		  
@@ -442,7 +475,7 @@
                       </a>
               <ul class="sub">
               <li><a class="" href="afficherPaniers.php">Afficher</a></li>
-              <li><a class="" href="ajouterPanier.php"><span>Ajouter</span></a></li>
+              <li><a class="" href="AjouterPanier.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 
@@ -504,7 +537,19 @@
                         <label for="id_client">Id_client:
                         </label>
                     </td>
-                    <td><input type="number" name="id_client" id_commande="id_client" maxlength="20" value = "<?php echo $commande['Id_client']; ?>"></td>
+                    <td>
+                    <select name="id_client" id="id_client" required >
+                     <option value="select" selected>Select</option>
+                        
+          <?php
+          foreach($listeClient as $ClientC){
+           ?>
+           <option value ='<?PHP echo $ClientC['Id_client']; ?>'> <?PHP echo $ClientC['Id_client']; ?></option>
+           <?php
+          }
+          ?>
+          </select>   
+          </td> 
                 </tr>
                 
                 <tr>
@@ -513,8 +558,18 @@
                         </label>
                     </td>
                     <td>
-                        <input type="number" name="id_livraison" id_commande="id_livraison" maxlength="20" value = "<?php echo $commande['Id_livraison']; ?>"></td>
-                    </td>
+                    <select name="id_livraison" id="id_livraison" required >
+                     <option value="select" selected>Select</option>
+                        
+          <?php
+          foreach($listeLivraison as $LivraisonC){
+           ?>
+           <option value ='<?PHP echo $LivraisonC['Id_livraison']; ?>'> <?PHP echo $LivraisonC['Id_livraison']; ?></option>
+           <?php
+          }
+          ?>
+          </select>   
+          </td> 
                 </tr>
                
                 <tr>

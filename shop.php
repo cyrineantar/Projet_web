@@ -1,7 +1,15 @@
 <?PHP
     include_once '../Zina/Back/model/Article.php';
     include_once '../Zina/Back/controller/ArticleC.php';
+
+	include_once '../Back/model/Categorie.php';
+    include_once '../Back/controller/CategorieC.php';
+
 	include "../Zina/Back/config.php";
+	session_start();
+
+	$categorieC = new CategorieC();
+
 	$articleC = new articleC();
 	$liste=$articleC->afficher_article();
 ?>
@@ -9,6 +17,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+  
     <title>Zina Shop</title>
 	<link rel="shortcut icon" href="images/logo.png">
     <meta charset="utf-8">
@@ -66,19 +75,18 @@
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-	          <li class="nav-item dropdown active">
+	          <li class="nav-item active"><a href="principale.php" class="nav-link">Home</a></li>
+	          <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
               <div class="dropdown-menu" aria-labelledby="dropdown04">
-              	<a class="dropdown-item" href="shop.html">Shop</a>
-                <a class="dropdown-item" href="product-single.html">Event</a>
-                <a class="dropdown-item" href="cart.html">Cart</a>
-                <a class="dropdown-item" href="checkout.html">Checkout</a>
+              	<a class="dropdown-item" href="shop.php">Shop</a>
+                <a class="dropdown-item" href="event.php">Event</a>
+                <a class="dropdown-item" href="cart.php">Cart</a>
               </div>
             </li>
 	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
 	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-	          <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+	          <li class="nav-item cta cta-colored"><a href="cart.php" class="nav-link"><span class="icon-shopping_cart"></span>[2]</a></li>
 
 	        </ul>
 	      </div>
@@ -96,38 +104,48 @@
         </div>
       </div>
     </div>
-
-    <section class="ftco-section bg-light">
-    	<div class="container">
+			    	<div class="col-md-4 col-lg-2 sidebar">
+		    		<div class="sidebar-box-2">
+		    			
+		    		</div>
+    			</div>
+	<?PHP
+				foreach ($liste as $article){
+			?>
+<!-------------------------------------Affichage--------------------------->
+<div class="container">
     		<div class="row">
-    			<div class="col-md-8 col-lg-10 order-md-last">
-    				<div class="row">
-		    			<div class="col-sm-6 col-md-6 col-lg-4 ftco-animate">
-		    				<div class="product">
-		    					<a href="#" class="img-prod"><img class="img-fluid" src="images/product-1.jpg" alt="Colorlib Template">
-		    						<div class="overlay"></div>
-		    					</a>
-		    					<div class="text py-3 px-3">
-		    						<h3><a href="#">Painting</a></h3>
-		    						<div class="d-flex">
-		    							<div class="pricing">
-				    						<p class="price"><span class="mr-2 price-dc">$120.00</span><span class="price-sale">$80.00</span></p>
-				    					</div>
-				    					<div class="rating">
-			    							<p class="text-right">
-			    								<a href="#"><span class="ion-ios-star-outline"></span></a>
-			    								<a href="#"><span class="ion-ios-star-outline"></span></a>
-			    								<a href="#"><span class="ion-ios-star-outline"></span></a>
-			    								<a href="#"><span class="ion-ios-star-outline"></span></a>
-			    								<a href="#"><span class="ion-ios-star-outline"></span></a>
-			    							</p>
-			    						</div>
-			    					</div>
-			    					<p class="bottom-area d-flex px-3">
-		    							<a href="#" class="add-to-cart text-center py-2 mr-1"><span>Add to cart <i class="ion-ios-add ml-1"></i></span></a>
-		    							<a href="#" class="buy-now text-center py-2">Buy now<span><i class="ion-ios-cart ml-1"></i></span></a>
-		    						</p>
+    			<div class="col-sm col-md-6 col-lg ftco-animate">
+    				<div class="product">
+    					<a href="#" class="img-prod"><img class="img-fluid" src="<?PHP echo $article['image']; ?>" alt="Colorlib Template">
+    						<span class="status"><?PHP echo $article['Nom_article']; ?></span>
+    						<div class="overlay"></div>
+    					</a>
+    					<div class="text py-3 px-3">
+    						<h3><a href="#">Table name : <?PHP echo $article['Nom_article']; ?></a></h3>
+    						<div class="d-flex">
+    							<div class="pricing">
+		    						<p class="price">Price : <span class="price-sale"><?PHP echo $article['Prix_article']; ?> Dt</span></p>
 		    					</div>
+		    					<div class="rating">
+								<span>Category : <?PHP $article['Ref_article']; ?><?PHP echo $article['Nom_article']; ?> </span>
+	    							<p class="text-right">
+									<?PHP echo $article['Description']; ?>
+	    							</p>
+	    						</div>
+	    					</div>
+
+    					</div>
+    				</div>
+    			</div>
+    			</div>
+    		</div>
+<!-------------------------------------Fin Affichage--------------------------->			
+
+			<?PHP
+				}
+			?>
+
 		    				</div>
 		    			</div>
 		    		</div>
@@ -148,17 +166,7 @@
 		        </div>
 		    	</div>
 
-		    	<div class="col-md-4 col-lg-2 sidebar">
-		    		<div class="sidebar-box-2">
-		    			<h2 class="heading mb-4"><a href="#">Products</a></h2>
-		    			<ul>
-		    				<li><a href="#">Paintings</a></li>
-								<li><a href="#">Decorations</a></li>
-								<li><a href="#">Plants</a></li>
-								<li><a href="#">Instruments</a></li>
-		    			</ul>
-		    		</div>
-    			</div>
+
     		</div>
     	</div>
     </section>

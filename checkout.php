@@ -6,7 +6,7 @@
     include_once '../Zina/Back/controller/LivraisonC.php';
     include_once '../Zina/Back/model/Livraison.php';
     include "../Zina/Back/config.php";
-
+    session_start();
     $ClientC = new ClientC();
     $listeClient= $ClientC->afficherClient();
 
@@ -106,19 +106,18 @@
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-	          <li class="nav-item dropdown active">
+	          <li class="nav-item active"><a href="principale.php" class="nav-link">Home</a></li>
+	          <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
               <div class="dropdown-menu" aria-labelledby="dropdown04">
               	<a class="dropdown-item" href="shop.php">Shop</a>
-                <a class="dropdown-item" href="product-single.php">Single Product</a>
+                <a class="dropdown-item" href="event.php">Event</a>
                 <a class="dropdown-item" href="cart.php">Cart</a>
-                <a class="dropdown-item" href="checkout.php">Checkout</a>
               </div>
             </li>
-	          <li class="nav-item"><a href="about.php" class="nav-link">About</a></li>
-	          <li class="nav-item"><a href="contact.php" class="nav-link">Contact</a></li>
-	          <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+	          <li class="nav-item cta cta-colored"><a href="cart.php" class="nav-link"><span class="icon-shopping_cart"></span>[2]</a></li>
 
 	        </ul>
 	      </div>
@@ -146,22 +145,23 @@
             <tr>  
                <td>
                     <h3 style="color:#97daf5d5;"> 
-                    Add order
+                    ADD AN ORDER
             </h3>
         </td> 
     </tr>    
                 <tr>  
                     <td>
-                        <label class="label"  for="prix_total">Price:
+                        <label class="label"  for="prix_total">Price item:
                         </label>
                     </td>
-                    <td><input class="controle" type="number" name="prix_total" id="prix_total" min="0" required /></td>
+                    <td> <input class="controle" type="number" name="prix_total" id="prix_total" min="0" readonly value = "<?php echo $_GET['prix']; ?>" /> </td>
                     <span class="resultat"></span>
+                    
                 </tr>
                 <tr>
 
                 <td>
-                        <label class="label" for="id_client">Id Customer:
+                        <label class="label" for="id_client">Id customer:
                         </label>
                     </td>
                 <td>
@@ -210,14 +210,9 @@
                 <tr>
                    <td>
                    
-                        <input type="submit" value="Add" class="btn btn-primary"> 
-                   
+                        <input type="submit" value="Send" class="btn btn-primary"> 
+                        <input type="reset" value="Cancel" class="btn btn-primary" >
                     </td>
-                    <td>
-                  
-                        <input type="reset" value="Exit" class="btn btn-primary" >
-                   
-                   </td>
                 </tr>
             </table>
         </form>

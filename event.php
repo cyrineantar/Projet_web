@@ -2,6 +2,7 @@
     include_once '../Zina/Back/Model/Even.php';
     include_once '../Zina/Back/Controller/EvenC.php';
 	include "../Zina/Back/config.php";
+	session_start();
 	$evenC=new EvenC();
 	$listeEven=$evenC->afficherEven();
 
@@ -68,19 +69,18 @@
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-	          <li class="nav-item dropdown active">
+	          <li class="nav-item active"><a href="principale.php" class="nav-link">Home</a></li>
+	          <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
               <div class="dropdown-menu" aria-labelledby="dropdown04">
               	<a class="dropdown-item" href="shop.php">Shop</a>
                 <a class="dropdown-item" href="event.php">Event</a>
                 <a class="dropdown-item" href="cart.php">Cart</a>
-                <a class="dropdown-item" href="checkout.php">Checkout</a>
               </div>
             </li>
 	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
 	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-	          <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+	          <li class="nav-item cta cta-colored"><a href="cart.php" class="nav-link"><span class="icon-shopping_cart"></span>[2]</a></li>
 
 	        </ul>
 	      </div>
@@ -104,8 +104,7 @@
     		<div class="row">
     			
     			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
-    				<table align = 'center' class="table">
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search" title="type in a name"
+    				<table align = 'center' id="dataTable" class="table">
 			<tr>
                 <th>Id Event</th>
 				<th>Event Name</th>
@@ -113,7 +112,6 @@
                 <th>Edning Date</th>
                 <th>Location</th>
 				<th>Description</th>
-                <th>Id Category Event</th>
 
 			</tr>
 
@@ -127,7 +125,6 @@
           <td><?PHP echo $even['Date_fin']; ?></td>
                     <td><?PHP echo $even['Localisation']; ?></td>
                     <td><?PHP echo $even['Description']; ?></td>
-                    <td><?PHP echo $even['Id_catg_even']; ?></td>
 				    </tr>
 			<?PHP
 				}

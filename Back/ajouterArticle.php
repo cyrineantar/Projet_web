@@ -2,17 +2,23 @@
     include_once '../Back/model/Article.php';
     include_once '../Back/controller/ArticleC.php';
     include "../Back/config.php";
+
+    session_start();
+    include "../Back/namecall.php";
     $error = "";
     $article= null;
 
     // create an instance of the controller
     $articleC = new ArticleC();
+    $article1C = new articleC();
+	$listeCategorie= $article1C->listeCategorie();
     if (
          
         isset($_POST["Nom_article"]) &&
         isset($_POST["image"]) &&
         isset($_POST["Description"]) &&
-        isset($_POST["Prix_article"]) 
+        isset($_POST["Prix_article"])&&
+        isset($_POST["Id_categorie"])  
       
     ) {
         if (
@@ -20,7 +26,8 @@
             !empty($_POST["Nom_article"]) && 
             !empty($_POST["image"]) && 
             !empty($_POST["Description"]) && 
-            !empty($_POST["Prix_article"]) 
+            !empty($_POST["Prix_article"]) &&
+            !empty($_POST["Id_categorie"]) 
           
         ) {
             $article = new Article(
@@ -29,6 +36,7 @@
                 $_POST['image'],
                 $_POST['Description'],
                 $_POST['Prix_article'],
+                $_POST['Id_categorie'],
                
             );
             $articleC->ajouter_article($article);
@@ -331,7 +339,14 @@
                             <span class="profile-ava">
                                 <img alt="" src="img/avatar1_small.jpg">
                             </span>
-                            <span class="username">Jenifer Smith</span>
+							
+                            <span class="username">
+							<?php
+                            if($_SESSION['username'] !== ""){
+
+                            echo $reponse['nom_admin'];
+							}
+                            ?></span>
                             <b class="caret"></b>
                         </a>
             <ul class="dropdown-menu extended logout">
@@ -349,7 +364,7 @@
                 <a href="#"><i class="icon_chat_alt"></i> Chats</a>
               </li>
               <li>
-                <a href="login.html"><i class="icon_key_alt"></i> Log Out</a>
+                <a href="login.php"><i class="icon_key_alt"></i> Log Out</a>
               </li>
               <li>
                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
@@ -372,7 +387,7 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <a class="" href="index.html">
+            <a class="" href="index.php">
                           <i class="icon_house_alt"></i>
                           <span>Dashboard</span>
                       </a>
@@ -432,6 +447,18 @@
               <li><a class="" href="ajouter_categorie.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
+		  
+		  <li class="sub-menu">
+            <a href="javascript:;" class="">
+                          <i class="icon_documents_alt"></i>
+                          <span>Categories-Even</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+              <ul class="sub">
+              <li><a class="" href="afficherCategorie.php">Afficher</a></li>
+              <li><a class="" href="ajoutCategorie.php"><span>Ajouter</span></a></li>
+            </ul>
+          </li>
 
           <li class="sub-menu">
             <a href="javascript:;" class="">
@@ -440,8 +467,10 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
             <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficher_livraison.php">Afficher Livraisons</a></li>
+              <li><a class="" href="ajouter_livraison.php"><span>Ajouter Livraisons</span></a></li>
+			  <li><a class="" href="afficher_livreur.php">Afficher Livreurs</a></li>
+              <li><a class="" href="ajouter_livreur.php"><span>Ajouter Livreurs</span></a></li>
             </ul>
           </li>
 
@@ -452,8 +481,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherEven.php">Afficher</a></li>
+              <li><a class="" href="AjouterEven.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 		  
@@ -465,7 +494,7 @@
                       </a>
               <ul class="sub">
               <li><a class="" href="afficherPaniers.php">Afficher</a></li>
-              <li><a class="" href="ajouterPanier.php"><span>Ajouter</span></a></li>
+              <li><a class="" href="AjouterPanier.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 
@@ -478,11 +507,11 @@
       <section class="wrapper">
         <div class="row">
           <div class="col-lg-12">
-            <h3 class="page-header"><i class="fa fa-files-o"></i>Categorie</h3>
+            <h3 class="page-header"><i class="fa fa-files-o"></i>Articles</h3>
             <ol class="breadcrumb">
               <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
-              <li><i class="icon_document_alt"></i>Gestion des Categorie</li>
-              <li><i class="fa fa-files-o"></i>Afficher Categorie</li>
+              <li><i class="icon_document_alt"></i>Gestion des Articles</li>
+              <li><i class="fa fa-files-o"></i>Afficher les articles </li>
             </ol>
           </div>
         </div>
@@ -498,13 +527,12 @@
             <table border="1" align="center">
 
                 <tr>
-                    <td rowspan='6' colspan='1'>Ajouter un article</td>
+                    <td rowspan='20' colspan='1'>Ajouter un article</td>
                     <td>
                         <label for="Ref_article"   class="bmd-label-floating">Ref_article:
                        </label>
                        <tr>
-            
-           
+      
         </tr> 
                     
                     
@@ -514,7 +542,8 @@
                         <label for="Nom_article">Nom_article:
                         </label>
                     </td>
-                    <td><input type="text" name="Nom_article" Ref_article="Nom_article" maxlength="20"></td>
+                    <td><input type="text" name="Nom_article" Ref_article="Nom_article" required pattern="^[A-Za-z  '-]+$" maxlength="20" placeholder="De 3 à 10 caractères"></td>
+                    
                 </tr>
                 
                 <tr>
@@ -524,15 +553,19 @@
             </td>
             <td>
                 <input type="file" name="image" Ref_article="image"  class="form-control" >
+               
             </td>
+            
         </tr>
+        
                 <tr>
                     <td>
                         <label for="Description">Description:
                         </label>
                     </td>
                     <td>
-                        <input type="text" name="Description"Ref_article="Description" maxlength="20">
+                        <textarea type="text" name="Description"Ref_article="Description"  rows="5" cols="33">
+                        </textarea>
                     </td>
                 </tr>
                 <tr>
@@ -541,9 +574,29 @@
                         </label>
                     </td>
                     <td>
-                        <input type="text" name="Prix_article"Ref_article="Prix_article" maxlength="20">
+                        <input type="text" name="Prix_article" Ref_article="Prix_article"   placeholder ="nombre seulement" >
                     </td>
                 </tr>
+
+
+                <tr>
+                    <td>
+                        <label for="Id_categorie">Nom categorie:
+                        </label>
+                    </td>
+                     <td>
+                     <select name="Id_categorie" id="Id_categorie" required >
+                     <option value="select" selected>Select</option>  
+                    <?php
+                      foreach($listeCategorie as $listeC){
+                       ?>
+                        <option value ='<?PHP echo $listeC['Id_categorie']; ?>'> <?PHP echo $listeC['Nom_categorie']; ?></option>
+                        <?php
+                          }
+                         ?>
+                     </select>   
+                </td> 
+                </tr> 
                 
                 <tr>
                     <td></td>
@@ -554,8 +607,42 @@
                         <input type="reset" value="Annuler" >
                     </td>
                 </tr>
+                
+                
             </table>
         </form>
+<script>
+        if (empty($Nom_article)) //Vérifie que le champ ne soit pas vide
+    {
+        echo 'Le champ est vide, allez vous faire enculer !';
+    }
+    else if (strlen($Nom_article > 25))
+    {
+        echo 'Le champ Prénom ne doit pas contenir plus de 25 caractères';
+    }  
+    else if (verifChaine($Nom_article))
+    {
+        echo 'le texte est ok et contient que des caracteres de a à z';
+    }
+    else //Pour les cas non-prévus
+    {
+        echo 'Erreur : Veuillez réessayer';
+    }
+     
+    //Fonction de vérification de chaîne
+    function verifChaine($Nom_article)
+    {
+    if(preg_match("`^([a-z])$`"),$Nom_article)
+    {
+    return true;
+    }
+    else
+    {
+    return false;
+    }
+    }
+
+    </script>
     <!--main content end-->
   </section>
   <!-- container section start -->
@@ -645,6 +732,7 @@
           }
         });
       });
+      
     </script>
 
 </body>

@@ -3,6 +3,7 @@ include_once '../Back/model/Livreur.php';
 include_once '../Back/controller/LivreurC.php';
 include "../Back/config.php";
 
+session_start();
 $db = config::getConnexion();
 $Id_livreur=$_POST['Id_livreur'];
 $Nom_livreur= $_POST['Nom_livreur'];

@@ -2,6 +2,9 @@
 	include "../Back/controller/ClientC.php";
 	include_once '../Back/model/Client.php';
     include "../Back/config.php";
+
+    session_start();
+    include "../Back/namecall.php";
 	$clientC=new ClientC();
 	$listeClient=$clientC->afficherClient();
     $listeClient=$clientC->trierNomClients();
@@ -283,7 +286,14 @@
                             <span class="profile-ava">
                                 <img alt="" src="img/avatar1_small.jpg">
                             </span>
-                            <span class="username">Jenifer Smith</span>
+							
+                            <span class="username">
+							<?php
+                            if($_SESSION['username'] !== ""){
+
+                            echo $reponse['nom_admin'];
+							}
+                            ?></span>
                             <b class="caret"></b>
                         </a>
             <ul class="dropdown-menu extended logout">
@@ -301,7 +311,7 @@
                 <a href="#"><i class="icon_chat_alt"></i> Chats</a>
               </li>
               <li>
-                <a href="login.html"><i class="icon_key_alt"></i> Log Out</a>
+                <a href="login.php"><i class="icon_key_alt"></i> Log Out</a>
               </li>
               <li>
                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
@@ -324,7 +334,7 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <a class="" href="index.html">
+            <a class="" href="index.php">
                           <i class="icon_house_alt"></i>
                           <span>Dashboard</span>
                       </a>
@@ -418,8 +428,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherEven.php">Afficher</a></li>
+              <li><a class="" href="AjouterEven.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 		  
@@ -453,18 +463,34 @@
           </div>
         </div>
     <!--main content start-->
+			        <div id="google_translate_element"></div>
+         <script type="text/javascript">
+             function googleTranslateElementInit() {
+                 new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+             }
+         </script>
+		 <form action="" method="POST">
+        <div class="row">
+          <div class="col-lg-12">
+            <section class="panel">
+              <header class="panel-heading">
+                Afficher Client
+              </header>
+		 <div class="panel-body">
+                <div class="form">
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <button><a href="ajouterClient.php">Ajouter un Client</a></button>
 		<hr>
-		<table border=1 align = 'center' class="table">
-		<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Rechercher" title="type in a name"
+		<table border=1 align = 'center' class="table" id="dataTable">
+		<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Rechercher" title="type in a name"/>
 			<tr>
                 <th>Id_client</th>
-				<th>Nom_client</th>
-				<th>Prenom_client</th>
-				<th>Num_client</th>
-				<th>Adresse_client</th>
-				<th>Carte_fidelite</th>
-				<th>Mot_de_passe</th>
+				<th>Nom d'utilisateur</th>
+				<th>Nom & Prenom du client</th>
+				<th>Numero client</th>
+				<th>Adresse client</th>
+				<th>Carte fidelite</th>
+				<th>Mot de passe</th>
 			</tr>
 
 			<?PHP
@@ -479,7 +505,7 @@
 					<td><?PHP echo $Client['Carte_fidelite']; ?></td>
 					<td><?PHP echo $Client['Mot_de_passe']; ?></td>
 					<td>
-						<form method="POST" action="supprimerClient.php">
+						<form method="POST" action="supprimerClient.php" >
 						<input type="submit" name="supprimer" value="supprimer">
 						<input type="hidden" value=<?PHP echo $Client['Id_client']; ?> name="Id_client">
 						</form>
@@ -494,9 +520,12 @@
 			?>
 		</table>
 								<a href="imprimerCLient.php?Id_client=<?PHP echo $Client['Id_client']; ?>" Id_client="Id_client" name="Id_client" > Imprimer </a>
-
+</div>
+</div>
     <!--main content end-->
   </section>
+  </div>
+  </div>
   <!-- container section start -->
 
   <!-- javascripts -->
@@ -527,6 +556,7 @@
 
     <!--custome script for all page-->
     <script src="js/scripts.js"></script>
+	<script src="js/submit.js"> </script>
     <!-- custom script for this page-->
     <script src="js/sparkline-chart.js"></script>
     <script src="js/easy-pie-chart.js"></script>

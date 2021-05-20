@@ -4,9 +4,9 @@
     include_once '../Zina/Back/model/Commande.php';
     include_once '../Zina/Back/controller/CommandeC.php';
     include "../Zina/Back/model/Article.php";
-	include "../Zina/Back/controller/ArticleC.php";
+	  include "../Zina/Back/controller/ArticleC.php";
     include "../Zina/Back/config.php";
-
+    session_start();
     $commandeC = new CommandeC();
     $listecommandes= $commandeC -> afficherCommandes();
      
@@ -108,19 +108,18 @@
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-	          <li class="nav-item dropdown active">
+	          <li class="nav-item active"><a href="principale.php" class="nav-link">Home</a></li>
+	          <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
               <div class="dropdown-menu" aria-labelledby="dropdown04">
               	<a class="dropdown-item" href="shop.php">Shop</a>
-                <a class="dropdown-item" href="product-single.html">Single Product</a>
+                <a class="dropdown-item" href="event.php">Event</a>
                 <a class="dropdown-item" href="cart.php">Cart</a>
-                <a class="dropdown-item" href="checkout.php">Checkout</a>
               </div>
             </li>
 	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
 	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-	          <li class="nav-item cta cta-colored"><a href="cart.php" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+	          <li class="nav-item cta cta-colored"><a href="cart.php" class="nav-link"><span class="icon-shopping_cart"></span>[2]</a></li>
 
 	        </ul>
 	      </div>

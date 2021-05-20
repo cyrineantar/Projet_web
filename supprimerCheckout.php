@@ -6,7 +6,7 @@
 	
 	if (isset($_POST["id_commande"])){
 		$commandeC->supprimerCommande($_POST["id_commande"]);
-		header('Location:checkout.php');
+		header('Location:cart1.php');
 	}
 
 ?>

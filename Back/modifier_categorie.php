@@ -275,7 +275,9 @@
                             <span class="profile-ava">
                                 <img alt="" src="img/avatar1_small.jpg">
                             </span>
-                            <span class="username">Jenifer Smith</span>
+							
+                            <span class="username">
+                            </span>
                             <b class="caret"></b>
                         </a>
             <ul class="dropdown-menu extended logout">
@@ -293,7 +295,7 @@
                 <a href="#"><i class="icon_chat_alt"></i> Chats</a>
               </li>
               <li>
-                <a href="login.html"><i class="icon_key_alt"></i> Log Out</a>
+                <a href="login.php"><i class="icon_key_alt"></i> Log Out</a>
               </li>
               <li>
                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
@@ -316,7 +318,7 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <a class="" href="index.html">
+            <a class="" href="index.php">
                           <i class="icon_house_alt"></i>
                           <span>Dashboard</span>
                       </a>
@@ -376,6 +378,18 @@
               <li><a class="" href="ajouter_categorie.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
+		  
+		  <li class="sub-menu">
+            <a href="javascript:;" class="">
+                          <i class="icon_documents_alt"></i>
+                          <span>Categories-Even</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+              <ul class="sub">
+              <li><a class="" href="afficherCategorie.php">Afficher</a></li>
+              <li><a class="" href="ajoutCategorie.php"><span>Ajouter</span></a></li>
+            </ul>
+          </li>
 
           <li class="sub-menu">
             <a href="javascript:;" class="">
@@ -384,8 +398,10 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
             <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficher_livraison.php">Afficher Livraisons</a></li>
+              <li><a class="" href="ajouter_livraison.php"><span>Ajouter Livraisons</span></a></li>
+			  <li><a class="" href="afficher_livreur.php">Afficher Livreurs</a></li>
+              <li><a class="" href="ajouter_livreur.php"><span>Ajouter Livreurs</span></a></li>
             </ul>
           </li>
 
@@ -396,8 +412,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherEven.php">Afficher</a></li>
+              <li><a class="" href="AjouterEven.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 		  
@@ -409,7 +425,7 @@
                       </a>
               <ul class="sub">
               <li><a class="" href="afficherPaniers.php">Afficher</a></li>
-              <li><a class="" href="ajouterPanier.php"><span>Ajouter</span></a></li>
+              <li><a class="" href="AjouterPanier.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 
@@ -456,15 +472,7 @@
                         <input type="text" Id_categorie="Nom_categorie" name="Nom_categorie" placeholder="Nom_categorie">
                     </td>
             </tr>
-            <tr>
-                <td>
-                    <label for="Type_categorie">Type_categorie</label>
-                    
-                    </td>
-                    <td>
-                        <input type="text" Id_categorie="Type_categorie" name="Type_categorie" placeholder="Type_categorie">
-                    </td>
-            </tr>
+            
             
     
         <tr>

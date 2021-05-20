@@ -1,10 +1,11 @@
 <?PHP
- include_once '../model/Livraison.php';
- include_once '../controller/LivraisonC.php';
+ include_once '../Back/model/Livraison.php';
+ include_once '../Back/controller/LivraisonC.php';
+ include "../Back/config.php";
 $livraisonC=new LivraisonC();
 if (isset($_POST["Id_livraison"])){
 	$livraisonC->supprimer_livraison($_POST["Id_livraison"]);
-	header('Location: ajouter_livraison.php');
+	header('Location: afficher_livraison.php');
 }
 
 ?>

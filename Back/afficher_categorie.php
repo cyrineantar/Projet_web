@@ -2,8 +2,12 @@
     include_once '../Back/model/Categorie.php';
     include_once '../Back/controller/CategorieC.php';
 	include "../Back/config.php";
+  session_start();
+  include "../Back/namecall.php";
 	$categorieC = new CategorieC();
 	$liste=$categorieC->afficher_categorie();
+  
+
 ?>
 
 <!DOCTYPE html>
@@ -282,7 +286,14 @@
                             <span class="profile-ava">
                                 <img alt="" src="img/avatar1_small.jpg">
                             </span>
-                            <span class="username">Jenifer Smith</span>
+							
+                            <span class="username">
+							<?php
+                            if($_SESSION['username'] !== ""){
+
+                            echo $reponse['nom_admin'];
+							}
+                            ?></span>
                             <b class="caret"></b>
                         </a>
             <ul class="dropdown-menu extended logout">
@@ -300,7 +311,7 @@
                 <a href="#"><i class="icon_chat_alt"></i> Chats</a>
               </li>
               <li>
-                <a href="login.html"><i class="icon_key_alt"></i> Log Out</a>
+                <a href="login.php"><i class="icon_key_alt"></i> Log Out</a>
               </li>
               <li>
                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
@@ -417,8 +428,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherEven.php">Afficher</a></li>
+              <li><a class="" href="AjouterEven.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 		  
@@ -451,14 +462,26 @@
             </ol>
           </div>
         </div>
+        <div id="google_translate_element"></div>
+         <script type="text/javascript">
+             function googleTranslateElementInit() {
+                 new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+             }
+         </script>
+
+         <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+         <a href="pdf.php" class="btn pull-right" > Exporter PDF </a>
+         
+         
     <!--main content start-->
     <button><a href="ajouter_categorie.php">Ajouter une Categorie</a></button>
 		<hr>
-		<table border=1 align = 'center'>
+		<table border=1 align = 'center'id="dataTable">
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="rechercher" title="type in a name"
 			<tr>
                 <th>Id_categorie</th>
 				<th>Nom_categorie</th>
-				<th>Type_categorie</th>
+				
 				
 			</tr>
 
@@ -466,9 +489,9 @@
 				foreach ($liste as $categorie){
 			?>
             		<tr>
-                    <td><?PHP echo $categorie['Id_categorie']; ?></td>
+          <td><?PHP echo $categorie['Id_categorie']; ?></td>
 					<td><?PHP echo $categorie['Nom_categorie']; ?></td>
-					<td><?PHP echo $categorie['Type_categorie']; ?></td>
+				
 					
 					<td>
 						<form method="POST" action="supprimer_categorie.php">
@@ -575,6 +598,26 @@
         });
       });
     </script>
+    <script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("dataTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
 
 </body>
 

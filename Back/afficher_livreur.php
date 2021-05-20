@@ -2,8 +2,13 @@
     include_once '../Back/model/Livreur.php';
     include_once '../Back/controller/LivreurC.php';
 	include "../Back/config.php";
+
+
+  session_start();
+  include "../Back/namecall.php";
 	$livreurC = new LivreurC();
 	$listelivreur=$livreurC->afficher_livreur();
+
 ?>
 
 
@@ -283,7 +288,14 @@
                             <span class="profile-ava">
                                 <img alt="" src="img/avatar1_small.jpg">
                             </span>
-                            <span class="username">Jenifer Smith</span>
+							
+                            <span class="username">
+							<?php
+                            if($_SESSION['username'] !== ""){
+
+                            echo $reponse['nom_admin'];
+							}
+                            ?></span>
                             <b class="caret"></b>
                         </a>
             <ul class="dropdown-menu extended logout">
@@ -301,7 +313,7 @@
                 <a href="#"><i class="icon_chat_alt"></i> Chats</a>
               </li>
               <li>
-                <a href="login.html"><i class="icon_key_alt"></i> Log Out</a>
+                <a href="login.php"><i class="icon_key_alt"></i> Log Out</a>
               </li>
               <li>
                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
@@ -317,13 +329,14 @@
       </div>
     </header>
     <!--header end-->
+
     <!--sidebar start-->
     <aside>
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <a class="" href="index.html">
+            <a class="" href="index.php">
                           <i class="icon_house_alt"></i>
                           <span>Dashboard</span>
                       </a>
@@ -417,8 +430,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherEven.php">Afficher</a></li>
+              <li><a class="" href="AjouterEven.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 		  
@@ -443,23 +456,34 @@
       <section class="wrapper">
         <div class="row">
           <div class="col-lg-12">
-            <h3 class="page-header"><i class="fa fa-files-o"></i>Ajouter Commandes</h3>
+            <h3 class="page-header"><i class="fa fa-files-o"></i>Liste des Livreurs</h3>
             <ol class="breadcrumb">
               <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
-              <li><i class="icon_document_alt"></i>Gestion des Commandes</li>
-              <li><i class="fa fa-files-o"></i>Ajouter Commandes</li>
+              <li><i class="icon_document_alt"></i>Gestion des Livreurs</li>
+              <li><i class="fa fa-files-o"></i>Liste des Livreurs</li>
             </ol>
           </div>
         </div>
+        <div id="google_translate_element"></div>
+         <script type="text/javascript">
+             function googleTranslateElementInit() {
+                 new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+             }
+         </script>
+
+         <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <!--main content start-->
     <button><a href="ajouter_livreur.php">Ajouter un livreur</a></button>
 		<hr>
-		<table border=1 align = 'center'>
+		<table border=1 align = 'center' id="dataTable">
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="rechercher" title="type in a name"
 			<tr>
                 <th>Id_livreur</th>
 				<th>Nom_livreur</th>
 				<th>Num_livreur</th>
                 <th>Destination</th>
+                <th>Id_livraison</th>
+                
 				
 			</tr>
 
@@ -471,6 +495,7 @@
 					<td><?PHP echo $livreur['Nom_livreur']; ?></td>
 					<td><?PHP echo $livreur['Num_livreur']; ?></td>
                     <td><?PHP echo $livreur['Destination']; ?></td>
+                    <td><?PHP echo $livreur['Id_livraison']; ?></td>
 					<td>
 						<form method="POST" action="supprimer_livreur.php">
 						<input type="submit" name="supprimer" value="supprimer">
@@ -487,6 +512,8 @@
 				}
 			?>
 		</table>
+    <a href="imprimer_livreur.php?id=<?PHP echo $livreur['Id_livreur']; ?>" name="Id_livreur"> Imprimer </a>
+
     <!--main content end-->
   </section>
   <!-- container section start -->
@@ -577,6 +604,26 @@
         });
       });
     </script>
+    <script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("dataTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
 
 </body>
 

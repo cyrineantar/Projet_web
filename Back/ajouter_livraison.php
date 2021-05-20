@@ -2,7 +2,9 @@
     include_once '../Back/model/Livraison.php';
     include_once '../Back/controller/LivraisonC.php';
     include "../Back/config.php";
-	
+
+		session_start();
+    include "../Back/namecall.php";
     $error = "";
 
     // create livraison
@@ -10,11 +12,15 @@
 
     // create an instance of the controller
     $livraisonC = new LivraisonC();
+    $livraison1C = new LivraisonC();
+    $listelivraison= $livraison1C->listelivraison();
     if (
         
         isset($_POST["Date_livraison"]) &&
         isset($_POST["Methode_de_livraison"]) &&
-        isset($_POST["Methode_de_payement"]) 
+        isset($_POST["Methode_de_payement"]) &&
+        isset($_POST["Id_client"]) 
+
         
        )
     {
@@ -22,7 +28,9 @@
             
             !empty($_POST["Date_livraison"]) &&
             !empty($_POST["Methode_de_livraison"]) &&
-            !empty($_POST["Methode_de_payement"]) 
+            !empty($_POST["Methode_de_payement"]) &&
+            !empty($_POST["Id_client"]) 
+
 
           
         ) {
@@ -30,7 +38,9 @@
                 
                 ($_POST["Date_livraison"]) ,
                 ($_POST["Methode_de_livraison"]) ,
-                ($_POST["Methode_de_payement"]) 
+                ($_POST["Methode_de_payement"]) ,
+                ($_POST["Id_client"]) 
+
                
             );
             $livraisonC->ajouter_livraison($livraison);
@@ -317,7 +327,14 @@
                             <span class="profile-ava">
                                 <img alt="" src="img/avatar1_small.jpg">
                             </span>
-                            <span class="username">Jenifer Smith</span>
+							
+                            <span class="username">
+							<?php
+                            if($_SESSION['username'] !== ""){
+
+                            echo $reponse['nom_admin'];
+							}
+                            ?></span>
                             <b class="caret"></b>
                         </a>
             <ul class="dropdown-menu extended logout">
@@ -335,7 +352,7 @@
                 <a href="#"><i class="icon_chat_alt"></i> Chats</a>
               </li>
               <li>
-                <a href="login.html"><i class="icon_key_alt"></i> Log Out</a>
+                <a href="login.php"><i class="icon_key_alt"></i> Log Out</a>
               </li>
               <li>
                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
@@ -358,7 +375,7 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <a class="" href="index.html">
+            <a class="" href="index.php">
                           <i class="icon_house_alt"></i>
                           <span>Dashboard</span>
                       </a>
@@ -452,8 +469,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherEven.php">Afficher</a></li>
+              <li><a class="" href="AjouterEven.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 		  
@@ -478,11 +495,11 @@
       <section class="wrapper">
         <div class="row">
           <div class="col-lg-12">
-            <h3 class="page-header"><i class="fa fa-files-o"></i>Ajouter Commandes</h3>
+            <h3 class="page-header"><i class="fa fa-files-o"></i>Ajouter Livraisons</h3>
             <ol class="breadcrumb">
               <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
-              <li><i class="icon_document_alt"></i>Gestion des Commandes</li>
-              <li><i class="fa fa-files-o"></i>Ajouter Commandes</li>
+              <li><i class="icon_document_alt"></i>Gestion des Livraisons</li>
+              <li><i class="fa fa-files-o"></i>Ajouter Livraisons</li>
             </ol>
           </div>
         </div>
@@ -497,7 +514,7 @@
             <table border="1" align="center">
 
                 <tr>
-                    <td rowspan='4' colspan='1'>Ajouter une livraison</td>
+                    <td rowspan='5' colspan='1'>Ajouter une livraison</td>
                     <td>
                         <label for="Id_livraison">Id_livraison:
                         </label>
@@ -531,6 +548,25 @@
                 </tr>
 
                 <tr>
+                    <td>
+                        <label for="Id_client">Id client:
+                        </label>
+                    </td>
+                     <td>
+                     <select name="Id_client" id="Id_client" required >
+                     <option value="select" selected>Select</option>  
+                    <?php
+                      foreach($listelivraison as $listeC){
+                       ?>
+                        <option value ='<?PHP echo $listeC['Id_client']; ?>'> <?PHP echo $listeC['Id_client']; ?> </option>
+                        <?php
+                          }
+                         ?>
+                     </select>   
+                </td> 
+                </tr>
+
+                <tr>
                     <td></td>
                     <td>
                         <input type="submit" value="Ajouter"> 
@@ -541,6 +577,47 @@
                 </tr>
             </table>
         </form>
+        <SCRIPT LANGUAGE="JavaScript">
+    function valider() 
+{
+    var InputText=window.document.MonForm.id.value;
+   
+    var i=window.document.MonForm.total.value;
+    var j=window.document.MonForm.nom.value;
+    var a=window.document.MonForm.adresse.value;
+    var t=window.document.MonForm.date.value;
+    if((InputText=="") || (j=="")) {
+   //alert ("verifier les champs");
+   document.getElementById('errornum').innerHTML="nom invalide";
+
+   
+        return false; 
+    
+    }
+    else if (a=="") {
+ 
+   document.getElementById('erroradresse').innerHTML="adresse invalide";
+
+
+   
+        return false; 
+    
+    }
+    else if (t=="") {
+ 
+ document.getElementById('errordate').innerHTML="date invalide";
+ 
+
+ 
+      return false; 
+  
+  }
+
+
+    else return true;
+  
+}
+</SCRIPT>
     <!--main content end-->
   </section>
   <!-- container section start -->

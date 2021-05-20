@@ -3,6 +3,9 @@
 	include_once '../Back/model/Client.php';
     include "../Back/config.php";
 
+
+    session_start();
+    include "../Back/namecall.php";
 	$clientC = new ClientC();
 	$error = "";
 	
@@ -319,7 +322,14 @@
                             <span class="profile-ava">
                                 <img alt="" src="img/avatar1_small.jpg">
                             </span>
-                            <span class="username">Jenifer Smith</span>
+							
+                            <span class="username">
+							<?php
+                            if($_SESSION['username'] !== ""){
+
+                            echo $reponse['nom_admin'];
+							}
+                            ?></span>
                             <b class="caret"></b>
                         </a>
             <ul class="dropdown-menu extended logout">
@@ -337,7 +347,7 @@
                 <a href="#"><i class="icon_chat_alt"></i> Chats</a>
               </li>
               <li>
-                <a href="login.html"><i class="icon_key_alt"></i> Log Out</a>
+                <a href="login.php"><i class="icon_key_alt"></i> Log Out</a>
               </li>
               <li>
                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
@@ -354,13 +364,13 @@
     </header>
     <!--header end-->
 
-<!--sidebar start-->
+    <!--sidebar start-->
     <aside>
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <a class="" href="index.html">
+            <a class="" href="index.php">
                           <i class="icon_house_alt"></i>
                           <span>Dashboard</span>
                       </a>
@@ -405,8 +415,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherArticles.php">Afficher</a></li>
+              <li><a class="" href="ajouterArticle.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
           <li class="sub-menu">
@@ -416,8 +426,20 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="afficherCategorie.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficher_categorie.php">Afficher</a></li>
+              <li><a class="" href="ajouter_categorie.php"><span>Ajouter</span></a></li>
+            </ul>
+          </li>
+		  
+		  <li class="sub-menu">
+            <a href="javascript:;" class="">
+                          <i class="icon_documents_alt"></i>
+                          <span>Categories-Even</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+              <ul class="sub">
+              <li><a class="" href="afficherCategorie.php">Afficher</a></li>
+              <li><a class="" href="ajoutCategorie.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 
@@ -428,8 +450,10 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
             <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficher_livraison.php">Afficher Livraisons</a></li>
+              <li><a class="" href="ajouter_livraison.php"><span>Ajouter Livraisons</span></a></li>
+			  <li><a class="" href="afficher_livreur.php">Afficher Livreurs</a></li>
+              <li><a class="" href="ajouter_livreur.php"><span>Ajouter Livreurs</span></a></li>
             </ul>
           </li>
 
@@ -440,8 +464,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherEven.php">Afficher</a></li>
+              <li><a class="" href="AjouterEven.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 		  
@@ -452,8 +476,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherPaniers.php">Afficher</a></li>
+              <li><a class="" href="AjouterPanier.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 
@@ -502,7 +526,7 @@
 				</tr>
 				<tr>
 					<td>
-						<label for="nom_client">Nom client:
+						<label for="nom_client">Nom d'utilisateur:
 						</label>
 					</td>
 					<td>
@@ -511,7 +535,7 @@
 				</tr>
                 <tr>
                     <td>
-                        <label for="prenom_client">Prenom client:
+                        <label for="prenom_client">Nom & Prenom du client::
                         </label>
                     </td>
                     

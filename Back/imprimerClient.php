@@ -15,7 +15,7 @@
 		<title> Afficher Liste Clients </title>
     </head>
     <body onload="window.print()" >
-		<table border=1 align = 'center'>
+		<table class="table" align = 'center'>
 			<tr>
                 <th>Id_client</th>
 				<th>Nom_client</th>

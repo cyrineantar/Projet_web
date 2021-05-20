@@ -5,7 +5,7 @@ class ArticleC{
 
 
  function ajouter_article($article){
-			$sql= " insert into articles (Nom_article,image,Description,Prix_article) values(:Nom_article,:image,:Description,:Prix_article)";
+			$sql= " insert into articles (Nom_article,image,Description,Prix_article,Id_categorie) values(:Nom_article,:image,:Description,:Prix_article,:Id_categorie)";
 			$db=config::getConnexion();
 			try{
 			$req=$db->prepare($sql);
@@ -17,6 +17,7 @@ class ArticleC{
 			$Description=$article->getDescription();
 			
 			$Prix_article=$article->getPrix_article();
+			$Id_categorie=$article->getId_categorie();
 			
 			
 			$req->bindValue(':Nom_article',$Nom_article);
@@ -25,6 +26,7 @@ class ArticleC{
 					
 				$req->bindValue(':Description',$Description);
 				$req->bindValue(':Prix_article',$Prix_article);
+				$req->bindValue(':Id_categorie',$Id_categorie);
 					
 				
 			$req->execute();
@@ -37,7 +39,7 @@ class ArticleC{
 }
 
 public function afficher_article(){
-    $sql="SELECT * From articles";
+    $sql="SELECT * From articles ";
     $db=config::getConnexion();
     try{
     $liste=$db->query($sql);
@@ -47,6 +49,17 @@ public function afficher_article(){
         die('Erreur:' .$e->getMessage());
     }
 }
+public function listeCategorie()
+    {
+      $sql = " SELECT * FROM categorie_articles";
+      $db = config::getConnexion();
+      try {
+        $liste= $db->query($sql);
+        return $liste;
+      } catch(Exception $e) {
+          die('Erreur: ' .$e->getMessage());
+      }
+    }
 
 
   public function supprimer_article($Ref_article){
@@ -125,9 +138,24 @@ function modifier_article(int $Ref_article, string $Nom_article, string $image  
 		    $req->execute();
            
         }
-
-
-
+function afficherElementArticle($ref)
+		{
+			$sql="SELECT * from articles where Ref_article = $ref";
+			$db = config::getConnexion();
+			try{
+				$query=$db->prepare($sql);
+				$query->execute();
+	
+				$local=$query->fetch(PDO::FETCH_OBJ);
+				return $local;
+			}
+			catch (Exception $e){
+				die('Erreur: '.$e->getMessage());
+			}
+		}
+		
 }
+
+
 
 ?>

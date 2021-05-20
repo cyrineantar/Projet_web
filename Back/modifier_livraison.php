@@ -274,7 +274,8 @@
                             <span class="profile-ava">
                                 <img alt="" src="img/avatar1_small.jpg">
                             </span>
-                            <span class="username">Jenifer Smith</span>
+							
+                            <span class="username"></span>
                             <b class="caret"></b>
                         </a>
             <ul class="dropdown-menu extended logout">
@@ -292,7 +293,7 @@
                 <a href="#"><i class="icon_chat_alt"></i> Chats</a>
               </li>
               <li>
-                <a href="login.html"><i class="icon_key_alt"></i> Log Out</a>
+                <a href="login.php"><i class="icon_key_alt"></i> Log Out</a>
               </li>
               <li>
                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
@@ -315,7 +316,7 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <a class="" href="index.html">
+            <a class="" href="index.php">
                           <i class="icon_house_alt"></i>
                           <span>Dashboard</span>
                       </a>
@@ -360,8 +361,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherArticles.php">Afficher</a></li>
+              <li><a class="" href="ajouterArticle.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
           <li class="sub-menu">
@@ -409,8 +410,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherEven.php">Afficher</a></li>
+              <li><a class="" href="AjouterEven.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 		  
@@ -435,11 +436,11 @@
       <section class="wrapper">
         <div class="row">
           <div class="col-lg-12">
-            <h3 class="page-header"><i class="fa fa-files-o"></i>Ajouter Commandes</h3>
+            <h3 class="page-header"><i class="fa fa-files-o"></i>Modifier Livraisons</h3>
             <ol class="breadcrumb">
               <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
-              <li><i class="icon_document_alt"></i>Gestion des Commandes</li>
-              <li><i class="fa fa-files-o"></i>Ajouter Commandes</li>
+              <li><i class="icon_document_alt"></i>Gestion des Livraisons</li>
+              <li><i class="fa fa-files-o"></i>Modifier Livraisons</li>
             </ol>
           </div>
         </div>
@@ -452,7 +453,7 @@
 
     <tr>
             <td>
-                <label for="Id_livraison"> Id_livraison</label>
+                <label for="Id_livraison"> Id livraison</label>
             </td>
             <td>
             <input type="int" Id_livraison="Id_livraison" name="Id_livraison"placeholder="Id_livraison">
@@ -462,16 +463,16 @@
 
             <tr>
                 <td>
-                    <label for="Date_livraison">Date_livraison</label>
+                    <label for="Date_livraison">Date livraison</label>
                     
                     </td>
                     <td>
-                        <input type="text" Id_livraison="Date_livraison" name="Date_livraison" placeholder="Date_livraison">
+                    <input type="text" Id_livraison="Date_livraison" name="Date_livraison" placeholder="Date_livraison">
                     </td>
             </tr>
             <tr>
                 <td>
-                    <label for="Methode_de_livraison">Methode_de_livraison</label>
+                    <label for="Methode_de_livraison">Methode de livraison</label>
                     
                     </td>
                     <td>
@@ -480,13 +481,14 @@
             </tr>
             <tr>
                 <td>
-                    <label for="Methode_de_payement">Methode_de_payement</label>
+                    <label for="Methode_de_payement">Methode de payement</label>
                     
                     </td>
                     <td>
                         <input type="text" Id_livraison="Methode_de_payement" name="Methode_de_payement" placeholder="Methode_de_payement">
                     </td>
             </tr>
+            
     
         <tr>
             <td>

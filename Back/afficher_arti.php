@@ -1,7 +1,6 @@
 <?php 
 include "../Back/model/ArticleC.php";
 
-
  $articleC=new articleC();
 
 $liste=$articleC->afficher_article(); 
@@ -37,9 +36,8 @@ foreach($liste as $row){
 
                              
   <button class="btn btn-primary" type="submit"><i class="fa fa-trash"></i> </button>
-    <input type="hidden" value="<?PHP echo $row['Ref_article']; ?>" name="Ref_article">       
-
-    
+    <input type="hidden" value="<?PHP echo $row['Ref_article']; ?>" name="Ref_article">
+          
   </form>
 
      </td>

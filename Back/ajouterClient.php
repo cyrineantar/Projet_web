@@ -2,6 +2,9 @@
 	include "../Back/controller/ClientC.php";
 	include_once '../Back/model/Client.php';
     include "../Back/config.php";
+
+    session_start();
+    include "../Back/namecall.php";
     $error = "";
 
     // create user
@@ -318,7 +321,14 @@
                             <span class="profile-ava">
                                 <img alt="" src="img/avatar1_small.jpg">
                             </span>
-                            <span class="username">Jenifer Smith</span>
+							
+                            <span class="username">
+							<?php
+                            if($_SESSION['username'] !== ""){
+
+                            echo $reponse['nom_admin'];
+							}
+                            ?></span>
                             <b class="caret"></b>
                         </a>
             <ul class="dropdown-menu extended logout">
@@ -336,7 +346,7 @@
                 <a href="#"><i class="icon_chat_alt"></i> Chats</a>
               </li>
               <li>
-                <a href="login.html"><i class="icon_key_alt"></i> Log Out</a>
+                <a href="login.php"><i class="icon_key_alt"></i> Log Out</a>
               </li>
               <li>
                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
@@ -359,7 +369,7 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <a class="" href="index.html">
+            <a class="" href="index.php">
                           <i class="icon_house_alt"></i>
                           <span>Dashboard</span>
                       </a>
@@ -453,8 +463,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherEven.php">Afficher</a></li>
+              <li><a class="" href="AjouterEven.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 		  
@@ -495,23 +505,23 @@
             <?php echo $error; ?>
         </div>
         
-        <form action="" method="POST">
-            <table border="2" align="center" class="table"">
+        <form id="myForm" action="" method="POST" onsubmit="return verifform(this)">
+            <table border="2" align="center" class="table">
 
                 <tr>
                     <td rowspan='6' colspan='1'>Fiche Personnelle</td>
                     <td>
-                        <label for="nom_client">Nom_client:
+                        <label for="nom_client">Nom d'utilisateur:
                         </label>
                     </td>
-                    <td><input type="text" name="nom_client" id_client="nom_client" maxlength="20"></td>
+                    <td><input type="text" name="nom_client" id_client="nom_client" maxlength="20"/></td>
                 </tr>
                 <tr>
                     <td>
-                        <label for="prenom_client">Prenom_client:
+                        <label for="prenom_client">Nom & Prenom du client:
                         </label>
                     </td>
-                    <td><input type="text" name="prenom_client" id_client="prenom_client" maxlength="20"></td>
+                    <td><input type="text" name="prenom_client" id_client="prenom_client" onblur="allLetter(this)" maxlength="20"/></td>
                 </tr>
                 
                 <tr>
@@ -520,7 +530,7 @@
                         </label>
                     </td>
                     <td>
-                        <input type="number" name="num_client" id_client="num_client" maxlength="8">
+                        <input type="number" name="num_client" id_client="num_client"  maxlength="8" onblur="allnumeric(this)"/>
                     </td>
                 </tr>
 
@@ -530,7 +540,7 @@
                         </label>
                     </td>
                     <td>
-                        <input type="text" name="adresse_client" id_client="adresse_client" maxlength="20">
+                        <input type="text" name="adresse_client" id_client="adresse_client" onblur="checkEmail(this.value)" maxlength="20" />
                     </td>
                 </tr>
 
@@ -540,7 +550,7 @@
                         </label>
                     </td>
                     <td>
-                        <input type="text" name="carte_fidelite" id_client="carte_fidelite" maxlength="4">
+                        <input type="text" name="carte_fidelite" id_client="carte_fidelite" onblur="allnumeric(this)"  maxlength="4"/>
                     </td>
                 </tr>
 
@@ -550,7 +560,7 @@
                         </label>
                     </td>
                     <td>
-                        <input type="password" name="mot_de_passe" id_client="mot_de_passe" maxlength="20">
+                        <input type="password" name="mot_de_passe" id_client="mot_de_passe" maxlength="20"/>
                     </td>
                 </tr>
         
@@ -558,10 +568,10 @@
                 <tr>
                     <td></td>
                     <td>
-                        <input type="submit" value="Envoyer"> 
+                        <input type="submit" value="Envoyer"/> 
                     </td>
                     <td>
-                        <input type="reset" value="Annuler" >
+                        <input type="reset" value="Annuler" />
                     </td>
                 </tr>
             </table>
@@ -640,6 +650,7 @@ return false;
 
     <!--custome script for all page-->
     <script src="js/scripts.js"></script>
+	<script src="js/submit.js"> </script>
     <!-- custom script for this page-->
     <script src="js/sparkline-chart.js"></script>
     <script src="js/easy-pie-chart.js"></script>

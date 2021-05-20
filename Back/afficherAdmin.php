@@ -2,7 +2,13 @@
 	include "../Back/controller/AdminC.php";
 	include_once '../Back/model/Admin.php';
     include "../Back/config.php";
+	include "../Back/controller/ClientC.php";
+	include_once '../Back/model/Client.php';
+
 	session_start();
+  include "../Back/namecall.php";
+	$ClientC = new ClientC();
+    $listeClient= $ClientC->afficherClient();
 	$adminC=new AdminC();
 	$listeAdmin=$adminC->afficherAdmin();
     $listeAdmin=$adminC->trierNomAdmin();
@@ -279,13 +285,12 @@
                             <span class="profile-ava">
                                 <img alt="" src="img/avatar1_small.jpg">
                             </span>
+							
                             <span class="username">
 							<?php
                             if($_SESSION['username'] !== ""){
-                            $user = $_SESSION['username'];
-							
-// Echo session variables that were set on previous page
-                            echo $user ;
+
+                            echo $reponse['nom_admin'];
 							}
                             ?></span>
                             <b class="caret"></b>
@@ -305,7 +310,7 @@
                 <a href="#"><i class="icon_chat_alt"></i> Chats</a>
               </li>
               <li>
-                <a href="login.html"><i class="icon_key_alt"></i> Log Out</a>
+                <a href="login.php"><i class="icon_key_alt"></i> Log Out</a>
               </li>
               <li>
                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
@@ -321,13 +326,14 @@
       </div>
     </header>
     <!--header end-->
+
     <!--sidebar start-->
     <aside>
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <a class="" href="index.html">
+            <a class="" href="index.php">
                           <i class="icon_house_alt"></i>
                           <span>Dashboard</span>
                       </a>
@@ -421,8 +427,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherEven.php">Afficher</a></li>
+              <li><a class="" href="AjouterEven.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 		  
@@ -458,6 +464,12 @@
           </div>
         </div>
         <!-- Form validations -->
+		        <div id="google_translate_element"></div>
+         <script type="text/javascript">
+             function googleTranslateElementInit() {
+                 new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+             }
+         </script>
 		<form action="" method="POST">
         <div class="row">
           <div class="col-lg-12">
@@ -467,14 +479,16 @@
               </header>
               <div class="panel-body">
                 <div class="form">
+				  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
                   <button><a href="ajouterAdmin.php">Ajouter un Admin</a></button>
 		<hr>
-		<table border=1 align = 'center' class="table">
+		<table border=1 align = 'center' class="table" id="dataTable">
 		<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Rechercher" title="type in a name">
 			<tr>
-                <th>Id_admin</th>
-				<th>Nom_admin</th>
-				<th>Mot_de_passe</th>
+                <th>Id admin</th>
+				<th>Nom admin</th>
+				<th>Mot de passe</th>
+				<th>Id client</th>
 			</tr>
 
 			<?PHP
@@ -484,6 +498,7 @@
                     <td><?PHP echo $admin['Id_admin']; ?></td>
 					<td><?PHP echo $admin['Nom_admin']; ?></td>
 					<td><?PHP echo $admin['Mot_de_passe']; ?></td>
+					<td><?PHP echo $admin['Id_client']; ?></td>
 					<td>
 						<form method="POST" action="supprimerAdmin.php">
 						<input type="submit" name="supprimer" value="supprimer">
@@ -518,7 +533,6 @@
             Licensing information: https://bootstrapmade.com/license/
             Purchase the pro version form: https://bootstrapmade.com/buy/?theme=NiceAdmin
           -->
-          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
         </div>
     </div>
   </section>
@@ -527,6 +541,7 @@
   <!-- javascripts -->
   <script src="js/jquery.js"></script>
   <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
   <!-- nice scroll -->
   <script src="js/jquery.scrollTo.min.js"></script>
   <script src="js/jquery.nicescroll.js" type="text/javascript"></script>

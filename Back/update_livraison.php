@@ -3,6 +3,7 @@ include_once '../Back/model/Livraison.php';
 include_once '../Back/controller/LivraisonC.php';
 include "../Back/config.php";
 
+session_start();
 $db = config::getConnexion();
 $Id_livraison=$_POST['Id_livraison'];
 $Date_livraison= $_POST['Date_livraison'];

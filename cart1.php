@@ -5,12 +5,12 @@
 
 	include "../Zina/Back/model/Article.php";
 	include "../Zina/Back/controller/ArticleC.php";
-
+	session_start();
 	$panierC=new PanierC();
 	$listePaniers=$panierC->recupérerdernierpanier();
 
-	$articleC=new ArticleC();
-	$listeArticle =$articleC->afficher_article();
+	$ArticleC=new ArticleC();
+	
 
 ?>
 
@@ -75,19 +75,18 @@
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-	          <li class="nav-item dropdown active">
+	          <li class="nav-item active"><a href="principale.php" class="nav-link">Home</a></li>
+	          <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
               <div class="dropdown-menu" aria-labelledby="dropdown04">
               	<a class="dropdown-item" href="shop.php">Shop</a>
-                <a class="dropdown-item" href="product-single.php">Single Product</a>
+                <a class="dropdown-item" href="event.php">Event</a>
                 <a class="dropdown-item" href="cart.php">Cart</a>
-                <a class="dropdown-item" href="checkout.php">Checkout</a>
               </div>
             </li>
-	          <li class="nav-item"><a href="about.php" class="nav-link">About</a></li>
-	          <li class="nav-item"><a href="contact.php" class="nav-link">Contact</a></li>
-	          <li class="nav-item cta cta-colored"><a href="cart.php" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+	          <li class="nav-item cta cta-colored"><a href="cart.php" class="nav-link"><span class="icon-shopping_cart"></span>[2]</a></li>
 
 	        </ul>
 	      </div>
@@ -122,20 +121,20 @@
 							<div class="row mt-5 pt-3 d-flex">
 	          	<div class="col-md-6 d-flex">
 	          		<div class="cart-detail cart-total bg-light p-3 p-md-4">
-	          			<h3 class="billing-heading mb-4" style="color:#97daf5d5;" >Shopping cart list</h3>
+	          			<h3 class="billing-heading mb-4" style="color:#97daf5d5;" >Cart List</h3>
 	          			<p class="d-flex">
 						  <?PHP
 				foreach($listePaniers as $panier){
 			?>
-		    						<span>ID Cart</span>
+		    						<span>ID CART</span>
 		    						<span><?PHP echo $panier['Id_panier']; ?></span>
 		    					</p>
 		    					<p class="d-flex">
-		    						<span>REFERENCE Item</span>
+		    						<span>REFERENCE ITEM</span>
 		    						<span><?PHP echo $panier['Ref_article']; ?></span>
 		    					</p>
 		    					<p class="d-flex">
-		    						<span>ID Order</span>
+		    						<span>ID ORDER</span>
 		    						<span><?PHP echo $panier['Id_commande']; ?></span>
 		    					</p>
 		    					
@@ -143,7 +142,7 @@
 								<hr>
 		    					<p class="d-flex total-price">
 								<form method="POST" action="supprimerCart.php">
-						<input type="submit" name="supprimer" value="Delete" class="btn btn-primary">
+						<input type="submit" name="DELETE" value="Delete" class="btn btn-primary">
 						<input type="hidden" value=<?PHP echo $panier['Id_panier']; ?> name="id_panier">
 						</form>
 		    					</p>
@@ -167,21 +166,24 @@
     		<div class="row justify-content-center">
     			<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
     				<div class="cart-total mb-3">
-    					<h3>Item price</h3>
-						<?php
-          foreach($listeArticle as $ArticleC){
-           ?>
+    					<h3>ITEM PRICE</h3>
+			
     					<p class="d-flex">
-    						<span>Item price</span>
-    						<span> <?PHP echo $ArticleC['Prix_article']; ?></span>
+    						<span>PRICE</span>
+    						<span> <?PHP  $elementC= $ArticleC->afficherElementArticle($panier['Ref_article']);
+                       echo $elementC->Prix_article; ?></span>
     					</p>
     					
-						<?php
-						}
-?>
+	
     				</div>
-    				<p class="text-center"><a href="checkout.php" class="btn btn-primary py-3 px-4">Order</a></p>
+					<form action="checkout.php" method="get">
+       <button type="submit" name="submit" id="submit" class="btn btn-primary py-3 px-4">
+        <i class="zmdi zmdi"></i>Order</button>
+        <input type="hidden" value=<?PHP echo $elementC->Prix_article;  ?> id="prix" name="prix">
+         </form>
+					
     			</div>
+
     		</div>
 			</div>
 		</section>

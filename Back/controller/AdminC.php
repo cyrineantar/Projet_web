@@ -3,8 +3,8 @@
 	class AdminC {
 		
 		function ajouterAdmin($admin){
-			$sql="INSERT INTO admins (nom_admin, mot_de_passe) 
-			VALUES (:nom_admin,:mot_de_passe)";
+			$sql="INSERT INTO admins (nom_admin, mot_de_passe,Id_client) 
+			VALUES (:nom_admin,:mot_de_passe, :Id_client)";
 			$db = config::getConnexion();
 			try{
 				$query = $db->prepare($sql);
@@ -12,6 +12,7 @@
 				$query->execute([
 					'nom_admin' => $admin->getNom_admin(),
 					'mot_de_passe' => $admin->getMot_de_passe(),
+					'Id_client' => $admin->getId_client(),
 					
 				]);			
 			}
@@ -51,13 +52,15 @@
 			$query = $db->prepare(
 				'UPDATE admins SET 
 					nom_admin = :nom_admin, 
-					mot_de_passe = :mot_de_passe
+					mot_de_passe = :mot_de_passe,
+					Id_client = :Id_client
 					
 				WHERE Id_admin = :Id_admin'
 			);
 			$query->execute([
 				'nom_admin' => $admin->getNom_admin(),
 				'mot_de_passe' => $admin->getMot_de_passe(),
+				'Id_client' => $admin->getId_client(),
 				'Id_admin' => $Id_admin
 			]);
 			echo $query->rowCount() . " records UPDATED successfully <br>";

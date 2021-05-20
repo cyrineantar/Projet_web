@@ -1,7 +1,10 @@
 <?PHP
+	include "../Back/controller/Categorie_evenC.php";
 	include_once '../Back/Model/Categorie_even.php';
-    include_once '../Back/Controller/Categorie_evenC.php';
-    include "../Back/config.php";
+	include "../Back/config.php";
+
+  session_start();
+  include "../Back/namecall.php";
 	$categorie_evenC=new Categorie_evenC();
 	$listeCategorie=$categorie_evenC->afficherCategorie();
 
@@ -283,7 +286,14 @@
                             <span class="profile-ava">
                                 <img alt="" src="img/avatar1_small.jpg">
                             </span>
-                            <span class="username">Jenifer Smith</span>
+							
+                            <span class="username">
+							<?php
+                            if($_SESSION['username'] !== ""){
+
+                            echo $reponse['nom_admin'];
+							}
+                            ?></span>
                             <b class="caret"></b>
                         </a>
             <ul class="dropdown-menu extended logout">
@@ -301,7 +311,7 @@
                 <a href="#"><i class="icon_chat_alt"></i> Chats</a>
               </li>
               <li>
-                <a href="login.html"><i class="icon_key_alt"></i> Log Out</a>
+                <a href="login.php"><i class="icon_key_alt"></i> Log Out</a>
               </li>
               <li>
                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
@@ -324,7 +334,7 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <a class="" href="index.html">
+            <a class="" href="index.php">
                           <i class="icon_house_alt"></i>
                           <span>Dashboard</span>
                       </a>
@@ -418,8 +428,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherEven.php">Afficher</a></li>
+              <li><a class="" href="AjouterEven.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 		  
@@ -444,11 +454,11 @@
       <section class="wrapper">
         <div class="row">
           <div class="col-lg-12">
-            <h3 class="page-header"><i class="fa fa-files-o"></i>Afficher Categories</h3>
+            <h3 class="page-header"><i class="fa fa-files-o"></i>Ajouter Commandes</h3>
             <ol class="breadcrumb">
               <li><i class="fa fa-home"></i><a href="index.html">Home</a></li>
-              <li><i class="icon_document_alt"></i>Gestion des Categories</li>
-              <li><i class="fa fa-files-o"></i>Afficher Categories</li>
+              <li><i class="icon_document_alt"></i>Gestion des Commandes</li>
+              <li><i class="fa fa-files-o"></i>Ajouter Commandes</li>
             </ol>
           </div>
         </div>
@@ -464,21 +474,21 @@
 			</tr>
 
 			<?PHP
-				foreach($listeCategorie as $categorie){
+				foreach($listeCategorie as $categorie_evenC){
 			?>
             		<tr>
-                    <td><?PHP echo $categorie['Id_catg_even']; ?></td>
-					<td><?PHP echo $categorie['Nom_catg_even']; ?></td>
-					<td><?PHP echo $categorie['Type_catg_even']; ?></td>
+                    <td><?PHP echo $categorie_evenC['Id_catg_even']; ?></td>
+					<td><?PHP echo $categorie_evenC['Nom_catg_even']; ?></td>
+					<td><?PHP echo $categorie_evenC['Type_catg_even']; ?></td>
 					
 					<td>
 						<form method="POST" action="supprimerCategorie.php">
 						<input type="submit" name="supprimer" value="supprimer">
-						<input type="hidden" value=<?PHP echo $categorie['Id_catg_even']; ?> name="Id_catg_even">
+						<input type="hidden" value=<?PHP echo $categorie_evenC['Id_catg_even']; ?> name="Id_catg_even">
 						</form>
 					</td>
 					<td>
-						<a href="modifierCategorie.php?id_catg_even=<?PHP echo $categorie['Id_catg_even']; ?>"id_catg_even="id_catg_even" name="id_catg_even"> Modifier </a>
+						<a href="modifierCategorie.php?id_catg_even=<?PHP echo $categorie_evenC['Id_catg_even']; ?>"id_catg_even="id_catg_even" name="id_catg_even"> Modifier </a>
 					</td>
 				</tr>
 			<?PHP

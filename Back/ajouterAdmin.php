@@ -2,8 +2,14 @@
 	include "../Back/controller/AdminC.php";
 	include_once '../Back/model/Admin.php';
     include "../Back/config.php";
-    $error = "";
+	include "../Back/controller/ClientC.php";
+	include_once '../Back/model/Client.php';
 
+  session_start();
+  include "../Back/namecall.php";
+    $error = "";
+    $ClientC = new ClientC();
+    $listeClient= $ClientC->afficherClient();
     // create user
     $admin = null;
 
@@ -11,15 +17,18 @@
     $adminC = new AdminC();
     if (
         isset($_POST["nom_admin"]) && 
-        isset($_POST["mot_de_passe"]) 
-    ) {
+        isset($_POST["mot_de_passe"])&& 
+        isset($_POST["Id_client"]))
+    {
         if (
             !empty($_POST["nom_admin"]) && 
-            !empty($_POST["mot_de_passe"]) 
+            !empty($_POST["mot_de_passe"])&& 
+            !empty($_POST["Id_client"])
         ) {
             $admin = new Admin(
                 $_POST['nom_admin'],
-                $_POST['mot_de_passe'], 
+                $_POST['mot_de_passe'],
+                $_POST['Id_client'],				
             );
             $adminC->ajouterAdmin($admin);
             header('Location:afficherAdmin.php');
@@ -301,7 +310,14 @@
                             <span class="profile-ava">
                                 <img alt="" src="img/avatar1_small.jpg">
                             </span>
-                            <span class="username">Jenifer Smith</span>
+							
+                            <span class="username">
+							<?php
+                            if($_SESSION['username'] !== ""){
+
+                            echo $reponse['nom_admin'];
+							}
+                            ?></span>
                             <b class="caret"></b>
                         </a>
             <ul class="dropdown-menu extended logout">
@@ -319,7 +335,7 @@
                 <a href="#"><i class="icon_chat_alt"></i> Chats</a>
               </li>
               <li>
-                <a href="login.html"><i class="icon_key_alt"></i> Log Out</a>
+                <a href="login.php"><i class="icon_key_alt"></i> Log Out</a>
               </li>
               <li>
                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
@@ -342,7 +358,7 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <a class="" href="index.html">
+            <a class="" href="index.php">
                           <i class="icon_house_alt"></i>
                           <span>Dashboard</span>
                       </a>
@@ -436,8 +452,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherEven.php">Afficher</a></li>
+              <li><a class="" href="AjouterEven.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 		  
@@ -499,6 +515,26 @@
                     </td>
                     <td><input type="password" name="mot_de_passe" Id_admin="mot_de_passe" maxlength="20"></td>
                 </tr>
+				<tr>
+				<td>
+                        <label for="Id_client">Id client:
+                        </label>
+                    </td>
+                      <td>
+                    <select name="Id_client" id="Id_client" required >
+                     <option value="select" selected>Select</option>
+                        
+          <?php
+          foreach($listeClient as $ClientC){
+           ?>
+           <option value ='<?PHP echo $ClientC['Id_client']; ?>'> <?PHP echo $ClientC['Id_client']; ?></option>
+           <?php
+          }
+          ?>
+          </select>   
+          </td>
+                </tr>
+				
                 <tr>
                     <td></td>
                     <td>

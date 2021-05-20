@@ -2,22 +2,31 @@
 	include "../Back/controller/AdminC.php";
 	include_once '../Back/model/Admin.php';
     include "../Back/config.php";
+	include "../Back/controller/ClientC.php";
+	include_once '../Back/model/Client.php';
 
+  session_start();
+  include "../Back/namecall.php";
+    $ClientC = new ClientC();
+    $listeClient= $ClientC->afficherClient();
 	$adminC = new AdminC();
 	$error = "";
 	
 	if (
 		isset($_POST["nom_admin"]) && 
-        isset($_POST["mot_de_passe"]) 
+        isset($_POST["mot_de_passe"])&& 
+        isset($_POST["Id_client"])) 
       
-	){
+	{
 		if (
             !empty($_POST["nom_admin"]) && 
-            !empty($_POST["mot_de_passe"])  
-        ) {
+            !empty($_POST["mot_de_passe"])&& 
+            !empty($_POST["Id_client"]))  
+         {
             $admin = new Admin(
                 $_POST['nom_admin'],
                 $_POST['mot_de_passe'],
+				$_POST['Id_client'],
 			);
 			
             $adminC->modifierAdmin($admin, $_GET['Id_admin']);
@@ -306,7 +315,14 @@
                             <span class="profile-ava">
                                 <img alt="" src="img/avatar1_small.jpg">
                             </span>
-                            <span class="username">Jenifer Smith</span>
+							
+                            <span class="username">
+							<?php
+                            if($_SESSION['username'] !== ""){
+
+                            echo $reponse['nom_admin'];
+							}
+                            ?></span>
                             <b class="caret"></b>
                         </a>
             <ul class="dropdown-menu extended logout">
@@ -324,7 +340,7 @@
                 <a href="#"><i class="icon_chat_alt"></i> Chats</a>
               </li>
               <li>
-                <a href="login.html"><i class="icon_key_alt"></i> Log Out</a>
+                <a href="login.php"><i class="icon_key_alt"></i> Log Out</a>
               </li>
               <li>
                 <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
@@ -341,13 +357,13 @@
     </header>
     <!--header end-->
 
-<!--sidebar start-->
+    <!--sidebar start-->
     <aside>
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <a class="" href="index.html">
+            <a class="" href="index.php">
                           <i class="icon_house_alt"></i>
                           <span>Dashboard</span>
                       </a>
@@ -392,8 +408,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherArticles.php">Afficher</a></li>
+              <li><a class="" href="ajouterArticle.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
           <li class="sub-menu">
@@ -403,8 +419,20 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="afficherCategorie.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficher_categorie.php">Afficher</a></li>
+              <li><a class="" href="ajouter_categorie.php"><span>Ajouter</span></a></li>
+            </ul>
+          </li>
+		  
+		  <li class="sub-menu">
+            <a href="javascript:;" class="">
+                          <i class="icon_documents_alt"></i>
+                          <span>Categories-Even</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+              <ul class="sub">
+              <li><a class="" href="afficherCategorie.php">Afficher</a></li>
+              <li><a class="" href="ajoutCategorie.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 
@@ -415,8 +443,10 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
             <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficher_livraison.php">Afficher Livraisons</a></li>
+              <li><a class="" href="ajouter_livraison.php"><span>Ajouter Livraisons</span></a></li>
+			  <li><a class="" href="afficher_livreur.php">Afficher Livreurs</a></li>
+              <li><a class="" href="ajouter_livreur.php"><span>Ajouter Livreurs</span></a></li>
             </ul>
           </li>
 
@@ -427,8 +457,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherEven.php">Afficher</a></li>
+              <li><a class="" href="AjouterEven.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 		  
@@ -439,8 +469,8 @@
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
               <ul class="sub">
-              <li><a class="" href="profile.html">Afficher</a></li>
-              <li><a class="" href="login.html"><span>Ajouter</span></a></li>
+              <li><a class="" href="afficherPaniers.php">Afficher</a></li>
+              <li><a class="" href="AjouterPanier.php"><span>Ajouter</span></a></li>
             </ul>
           </li>
 
@@ -478,7 +508,7 @@
 		<form action="" method="POST">
             <table align="center">
                 <tr>
-                    <td rowspan='3' colspan='1'>
+                    <td rowspan='4' colspan='1'>
 					
 					</td>
                     <td>
@@ -504,6 +534,25 @@
                         </label>
                     </td>
                     <td><input type="password" name="mot_de_passe" Id_admin="mot_de_passe" maxlength="20" value = "<?php echo $admin['Mot_de_passe']; ?>"></td>
+                </tr>
+				<tr>
+                      <td>
+					  <label for="Id_client">Id client:
+                        </label>
+						<td>
+                    <select name="Id_client" id="Id_client" required >
+                     <option value="select" selected>Select</option>
+                        
+          <?php
+          foreach($listeClient as $ClientC){
+           ?>
+           <option value ='<?PHP echo $ClientC['Id_client']; ?>'> <?PHP echo $ClientC['Id_client']; ?></option>
+           <?php
+          }
+          ?>
+          </select>  
+          </td>		  
+          </td>
                 </tr>
                 
                 <tr>

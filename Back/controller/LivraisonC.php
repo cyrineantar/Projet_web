@@ -5,7 +5,7 @@ class LivraisonC
 {
     public function ajouter_livraison($livraison)
     {
-        $sql="insert into livraisons(Date_livraison,Methode_de_livraison,Methode_de_payement) values(:Date_livraison,:Methode_de_livraison,:Methode_de_payement)";
+        $sql="insert into livraisons(Date_livraison,Methode_de_livraison,Methode_de_payement,Id_client) values(:Date_livraison,:Methode_de_livraison,:Methode_de_payement,:Id_client)";
         $db=config::getConnexion();
         try{
         $req=$db->prepare($sql);
@@ -16,7 +16,7 @@ class LivraisonC
 
         $Methode_de_payement=$livraison->getMethode_de_payement();
 
-        
+        $Id_client=$livraison->getId_client();
     
         $req->bindValue(':Date_livraison',$Date_livraison);
         
@@ -24,7 +24,8 @@ class LivraisonC
                 
         $req->bindValue(':Methode_de_payement',$Methode_de_payement);
 
-            
+        $req->bindValue(':Id_client',$Id_client);
+
         $req->execute();
         }
         catch(Exception $e){
@@ -34,7 +35,7 @@ class LivraisonC
 }
 public function afficher_livraison()
 {
-			$sql="SELECT * From livraisons ";
+			$sql="SELECT * From livraisons order by Methode_de_livraison ASC";
 			$db=config::getConnexion();
 			try{
 			$liste=$db->query($sql);
@@ -44,6 +45,17 @@ public function afficher_livraison()
 				die('Erreur:' .$e->getMessage());
 			}
 }
+public function listelivraison()
+    {
+      $sql = " SELECT * FROM clients";
+      $db = config::getConnexion();
+      try {
+        $liste= $db->query($sql);
+        return $liste;
+      } catch(Exception $e) {
+          die('Erreur: ' .$e->getMessage());
+      }
+    }
 
 public function supprimer_livraison($Id_livraison){
     $sql="DELETE FROM livraisons where Id_livraison=:Id_livraison";
@@ -65,7 +77,20 @@ function modifier_livraison(int $Id_livraison,string $Date_livraison, string $Me
 		    $req->execute();
            
         }
+/*function recuperer_livraison($Id_livraison){
+    $sql="SELECT * from livraisons where Id_livraison=$Id_livraison";
+    $db = config::getConnexion();
+    try{
+        $query=$db->prepare($sql);
+        $query->execute();
 
+        $listeLivraison=$query->fetch();
+        return $listeLivraison;
+    }
+    catch (Exception $e){
+        die('Erreur: '.$e->getMessage());
+    }
+}*/
 
 }
 ?>

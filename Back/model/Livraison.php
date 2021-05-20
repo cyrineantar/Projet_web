@@ -5,15 +5,16 @@
          private $Date_livraison;
 	     private $Methode_de_livraison;
 	     private $Methode_de_payement;
+		 private $Id_client;
 
  
-    public function __construct($Date_livraison,$Methode_de_livraison,$Methode_de_payement)
+    public function __construct($Date_livraison,$Methode_de_livraison,$Methode_de_payement,$Id_client)
         {
 		
 		$this->Date_livraison=$Date_livraison;
 		$this->Methode_de_livraison=$Methode_de_livraison;
 		$this->Methode_de_payement=$Methode_de_payement;
-		
+		$this->Id_client=$Id_client;
 		}
 		
 	
@@ -39,9 +40,11 @@
 		{
 			$this->Methode_de_payement=$Methode_de_payement;
 		}
-
-
-
+		
+		public function setId_client($Id_client)
+		{
+			$this->Id_client=$Id_client;
+		}
 
 	    public function getId_livraison()
 		{
@@ -60,6 +63,10 @@
 		
 	    public function getMethode_de_payement(){
 			return $this->Methode_de_payement;
+		}
+		
+		public function getId_client(){
+			return $this->Id_client;
 		}
 
 

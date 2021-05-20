@@ -5,15 +5,15 @@
          private $Nom_livreur;
 	     private $Num_livreur;
 	     private $Destination;
+		 private $Id_livraison;
         
  
-    public function __construct($Nom_livreur,$Num_livreur,$Destination)
+    public function __construct($Nom_livreur,$Num_livreur,$Destination,$Id_livraison)
         {
-		
 		$this->Nom_livreur=$Nom_livreur;
 		$this->Num_livreur=$Num_livreur;
 		$this->Destination=$Destination;
-		
+		$this->Id_livraison=$Id_livraison;
 		
 		}
 		
@@ -36,9 +36,14 @@
 		}
 		
 		
-	public function setDestination($Destination)
+	    public function setDestination($Destination)
 		{
 			$this->Destination=$Destination;
+		}
+
+		public function setId_livraison($Id_livraison)
+		{
+			$this->Id_livraison=$Id_livraison;
 		}
 
 
@@ -60,6 +65,10 @@
 		
 	    public function getDestination(){
 			return $this->Destination;
+		}
+
+		public function getId_livraison(){
+			return $this->Id_livraison;
 		}
 		
         

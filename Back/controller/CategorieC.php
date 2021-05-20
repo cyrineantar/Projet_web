@@ -3,18 +3,13 @@
 class CategorieC{
 
 public function ajouter_categorie($categorie){
-			$sql="insert into categorie_articles(Nom_categorie,Type_categorie) values(:Nom_categorie,:Type_categorie)";
+			$sql="insert into categorie_articles(Nom_categorie) values(:Nom_categorie)";
 			$db=config::getConnexion();
 			try{
 			$req=$db->prepare($sql);
 			
 			$Nom_categorie=$categorie->getNom_categorie();
-		
-			$Type_categorie=$categorie->getType_categorie();
-				
-			
 			$req->bindValue(':Nom_categorie',$Nom_categorie);
-			$req->bindValue(':Type_categorie',$Type_categorie);	
 			$req->execute();
 			}
 			catch(Exception $e){
@@ -24,7 +19,7 @@ public function ajouter_categorie($categorie){
 }
 
 public function afficher_categorie(){
-    $sql="SELECT * From categorie_articles";
+    $sql="SELECT * From categorie_articles ORDER  BY Nom_categorie ASC";
     $db=config::getConnexion();
     try{
     $liste=$db->query($sql);
@@ -57,10 +52,10 @@ public function afficher_categorie(){
 		
 }
 */
-function modifier_categorie(int $Id_categorie, string $Nom_categorie, string $Type_categorie)
+function modifier_categorie(int $Id_categorie, string $Nom_categorie)
         {
             $db = config::getConnexion();
-            $sql = "UPDATE categorie_articles SET Id_categorie='$Id_categorie'  , Nom_categorie='$Nom_categorie' , Type_categorie='$Type_categorie'  WHERE Id_categorie='$Id_categorie'";
+            $sql = "UPDATE categorie_articles SET Id_categorie='$Id_categorie'  , Nom_categorie='$Nom_categorie'  WHERE Id_categorie='$Id_categorie'";
             $req = $db->prepare($sql);
 		    $req->execute();
            
@@ -116,17 +111,16 @@ public function supprimer_categorie($Id_categorie){
         die('Erreur:' .$e->getMessage());
     }   
 }
- /*public function chercher_categorie($categorie){
-	$sql="SELECT * From categorie_articles where Id_categorie='".$Id_categorie."'";
-	$db=config::getConnexion();
-	try{
-		
-	$liste=$db->query($sql);
-	return $liste;
-	}
-	catch(Exception $e){
-		die('Erreur:' .$e->getMessage());
-	}
-}	*/	
+/*public function tricategorie()
+{
+	$db = config::getConnexion();
+	$sql = "SELECT * FROM categorie_articles ORDER BY Nom_categorie DESC;";
+	
+	$req = $db->prepare($sql);
+	$req->execute();
+	$result = $req->fetchAll(PDO::FETCH_OBJ);
+	return $result;
+
+}*/
 }
 ?>

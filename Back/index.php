@@ -295,22 +295,16 @@ include "../Back/namecall.php";
                 <a href="#"><i class="icon_profile"></i> My Profile</a>
               </li>
               <li>
-                <a href="#"><i class="icon_mail_alt"></i> My Inbox</a>
+                <a href="#chats"><i class="icon_mail_alt"></i> My Inbox</a>
               </li>
               <li>
-                <a href="#"><i class="icon_clock_alt"></i> Timeline</a>
+                <a href="#calendar"><i class="icon_clock_alt"></i> Timeline</a>
               </li>
               <li>
-                <a href="#"><i class="icon_chat_alt"></i> Chats</a>
+                <a href="#chats"><i class="icon_chat_alt"></i> Chats</a>
               </li>
               <li>
                 <a href="login.php"><i class="icon_key_alt"></i> Log Out</a>
-              </li>
-              <li>
-                <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
-              </li>
-              <li>
-                <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
               </li>
             </ul>
           </li>
@@ -327,7 +321,7 @@ include "../Back/namecall.php";
         <!-- sidebar menu start-->
         <ul class="sidebar-menu">
           <li class="active">
-            <a class="" href="index.html">
+            <a class="" href="index.php">
                           <i class="icon_house_alt"></i>
                           <span>Dashboard</span>
                       </a>
@@ -759,12 +753,12 @@ include "../Back/namecall.php";
 
 
         <!-- project team & activity start -->
-        <div class="row">
+        <div  class="row">
           <div class="col-md-4 portlets">
             <!-- Widget -->
             <div class="panel panel-default">
               <div class="panel-heading">
-                <div class="pull-left">Message</div>
+                <div class="pull-left" >Message</div>
                 <div class="widget-icons pull-right">
                   <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
                   <a href="#" class="wclose"><i class="fa fa-times"></i></a>
@@ -776,7 +770,7 @@ include "../Back/namecall.php";
                 <!-- Widget content -->
                 <div class="padd sscroll">
 
-                  <ul class="chats">
+                  <ul class="chats" >
 
                     <!-- Chat by us. Use the class "by-me". -->
                     <li class="by-me">
@@ -785,7 +779,7 @@ include "../Back/namecall.php";
                         <img src="img/user.jpg" alt="" />
                       </div>
 
-                      <div class="chat-content">
+                      <div class="chat-content" id="chats" >
                         <!-- In meta area, first include "name" and then "time" -->
                         <div class="chat-meta">John Smith <span class="pull-right">3 hours ago</span></div>
                         Vivamus diam elit diam, consectetur dapibus adipiscing elit.
@@ -802,7 +796,12 @@ include "../Back/namecall.php";
 
                       <div class="chat-content">
                         <!-- In the chat meta, first include "time" then "name" -->
-                        <div class="chat-meta">3 hours ago <span class="pull-right">Jenifer Smith</span></div>
+                        <div class="chat-meta">3 hours ago <span class="pull-right"><?php
+                            if($_SESSION['username'] !== ""){
+
+                            echo $reponse['nom_admin'];
+							}
+                            ?></span></div>
                         Vivamus diam elit diam, consectetur fconsectetur dapibus adipiscing elit.
                         <div class="clearfix"></div>
                       </div>
@@ -828,7 +827,12 @@ include "../Back/namecall.php";
 
                       <div class="chat-content">
                         <!-- In the chat meta, first include "time" then "name" -->
-                        <div class="chat-meta">3 hours ago <span class="pull-right">Jenifer Smith</span></div>
+                        <div class="chat-meta">3 hours ago <span class="pull-right"><?php
+                            if($_SESSION['username'] !== ""){
+
+                            echo $reponse['nom_admin'];
+							}
+                            ?></span></div>
                         Vivamus diam elit diam, consectetur fermentum sed dapibus eget, Vivamus consectetur dapibus adipiscing elit.
                         <div class="clearfix"></div>
                       </div>
@@ -866,7 +870,12 @@ include "../Back/namecall.php";
                   <div class="col-lg-4">
                     <span class="profile-ava pull-right">
                                         <img alt="" class="simple" src="img/avatar1_small.jpg">
-                                        Jenifer smith
+                                        <?php
+                            if($_SESSION['username'] !== ""){
+
+                            echo $reponse['nom_admin'];
+							}
+                            ?>
                                 </span>
                   </div>
                 </div>
